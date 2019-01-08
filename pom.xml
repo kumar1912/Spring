@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mycompany.di</groupId>
-	<artifactId>01_git_di_annotation_autowire1_field</artifactId>
+	<artifactId>01_git_Spring_annotation_autowire1_field</artifactId>
 	<version>0.1.0</version>
 
 	<parent>
