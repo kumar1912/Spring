@@ -4,7 +4,30 @@ https://www.mailinator.com/
 Tool Rest Client 
 altair graphql client chrome
 
+REST Assured
+REST API Using Java and BDD Cucumber: API Testing
+RESTful Web Services, Java, Spring Boot, Spring MVC and JPA
+		Section 23: Testing Service Layer Code with JUnit 5 & Mockito
+		Section 25: JUnit Integration Test. Testing JWT Tokens and UserId.
+		Section 27: Testing RESTful Web Services with Rest Assured
+				https://github.com/simplyi/mobile-app-ws-rest-assured-test
+				https://github.com/simplyi/mobile-app-ws-rest-assured-test/blob/master/src/test/java/com/appsdeveloperblog/app/ws/restassuredtest/UsersWebServiceEndpointTest.java
 
+			You will also learn how to use JUnit 5 to test your code and how to use one of the most popular test frameworks called Rest Assured to test 
+			RESTful Web Service endpoints of your REST Api.
+			
+			
+			https://tutsnode.com/multithreadingparallel-asynchronous-coding-in-modern-java/
+https://tutsnode.com/java-concurrency-specialist-course/
+https://tutsnode.com/java-concurrency-troubleshooting-data-access-and-consistency/
+https://tutsnode.com/java-concurrency-troubleshooting-latency-and-throughput/
+https://tutsnode.com/multithreadingparallel-asynchronous-coding-in-modern-java/
+
+https://freecoursesite.com/concurrency-multithreading-and-parallel-computing-in-java/
+
+
+selenium
+https://stackabuse.com/web-browser-automation-with-selenium-and-java
 
 ALL Important 
 https://medium.com/star-gazers/comprehensive-guide-to-distributed-systems-d89449a7ff77       ****************Notes Supern
