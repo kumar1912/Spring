@@ -1,1 +1,57 @@
-Added New
+007 Restful-booker
+https://restful-booker.herokuapp.com/apidoc/index.html
+
+009 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L08/restassured-for-beginners
+
+010 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L09/restassured-for-beginners
+
+011 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L10/restassured-for-beginners
+
+011 JsonPath
+https://www.javadoc.io/doc/io.rest-assured/json-path/3.0.0/io/restassured/path/json/JsonPath.html
+
+012 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L11/restassured-for-beginners
+
+012 JSON-In-Java-Maven-dependency
+https://mvnrepository.com/artifact/org.json/json
+
+013 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L12/restassured-for-beginners
+
+014 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L13/restassured-for-beginners
+
+015 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L14/restassured-for-beginners
+
+016 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L15/restassured-for-beginners
+
+
+017 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L16/restassured-for-beginners
+
+018 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L17/restassured-for-beginners
+
+019 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L18/restassured-for-beginners
+
+020 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L19/restassured-for-beginners
+
+021 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L20/restassured-for-beginners
+
+022 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L21/restassured-for-beginners
+
+022 Jackson-Databind-Maven-dependency
+https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+
+023 Code-for-this-lecture-on-github
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L22/restassured-for-beginners
