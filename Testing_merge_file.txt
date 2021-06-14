@@ -88,6 +88,10 @@ https://github.com/eugenp/tutorials/blob/master/spring-boot-rest/src/test/java/c
 https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application  			 int page, int size, String sortDir, String sort) {   
 
 
+
+https://hellokoding.com/mapping-jpa-hibernate-entity-and-dto-with-mapstruct/             Mapstruct
+
+
 	@GetMapping("/custom/pageable")
 	public ResponseBase retrieveCustomer(@Param(value = "page") int page, 
 												@Param(value = "size") int size){
