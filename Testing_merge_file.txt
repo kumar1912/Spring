@@ -55,3 +55,249 @@ https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 
 023 Code-for-this-lecture-on-github
 https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/tree/master/L22/restassured-for-beginners
+
+
+https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-part-seven-pagination/
+https://github.com/pkainulainen/spring-data-jpa-examples
+
+F:\Utorrent\BDD Junit\REST Assured. API test automation for beginners\[TutsNode.com] - REST Assured. API test automation for beginners
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners
+
+https://www.javacodegeeks.com/2012/01/rest-pagination-in-spring.html
+https://gist.github.com/eugenp/1622997		PaginationDiscoverabilityListener.java
+
+
+https://github.com/vijjayy81/spring-boot-jpa-rest-demo-filter-paging-sorting    *** Project Required PAgination  (vijjayy)             sample taken , example filter query param
+             
+
+https://reflectoring.io/spring-boot-paging/
+https://github.com/thombergs/code-examples/blob/master/spring-boot/paging/src/test/java/io/reflectoring/paging/PagedControllerTest.java  PagedControllerTest.java
+
+https://www.baeldung.com/rest-api-pagination-in-spring
+https://github.com/eugenp/tutorials/blob/master/spring-boot-rest/src/main/java/com/baeldung/springpagination/controller/PostRestController.java          ******
+
+
+https://bezkoder.com/spring-boot-pagination-filter-jpa-pageable/
+
+
+https://github.com/dimashyshkin/REST-Assured.-API-test-automation-for-beginners/blob/master/L17/restassured-for-beginners/src/test/java/com/herokuapp/restfulbooker/GetBookingTests.java
+
+https://github.com/eugenp/tutorials/blob/master/spring-web-modules/spring-rest-angular/src/test/java/com/baeldung/web/service/StudentServiceIntegrationTest.java         sample taken
+https://www.baeldung.com/rest-api-pagination-in-spring
+https://github.com/eugenp/tutorials/blob/master/spring-boot-rest/src/test/java/com/baeldung/web/FooPageableLiveTest.java    sample taken    
+https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application  			 int page, int size, String sortDir, String sort) {   
+
+
+	@GetMapping("/custom/pageable")
+	public ResponseBase retrieveCustomer(@Param(value = "page") int page, 
+												@Param(value = "size") int size){
+//		Pageable requestedPage = PageRequest.of(page, size, );
+		Pageable requestedPage = PageRequest.of(page, size, Sort.by(Direction.ASC, "firstname"));
+		Page<Customer> customers  = customerRepository.findAll(requestedPage);
+		ResponseBase res = new ResponseBase(customers.getContent(), customers.getTotalPages(),
+										customers.getNumber(), customers.getSize(),customers.getTotalElements(),
+										customers.isFirst(),customers.isLast());
+		
+		return res;
+	}
+  
+  
+  import java.util.List;
+
+public class ResponseBase {
+	private List<Customer> customers;
+	private int totalPages;
+	private int pageNumber;
+	private int pageSize;
+	private long totalElements;
+	
+	private boolean isFirst;
+	private boolean isLast;
+	
+	public ResponseBase() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ResponseBase(List<Customer> customers, int totalPages, int pageNumber, int pageSize, long totalElements,
+			boolean isFirst, boolean isLast) {
+		super();
+		this.customers = customers;
+		this.totalPages = totalPages;
+		this.pageNumber = pageNumber;
+		this.pageSize = pageSize;
+		this.totalElements = totalElements;
+		this.isFirst = isFirst;
+		this.isLast = isLast;
+	}
+  
+		<!-- https://mvnrepository.com/artifact/io.rest-assured/json-path -->
+<dependency>
+    <groupId>io.rest-assured</groupId>
+    <artifactId>json-path</artifactId>
+    <version>4.1.2</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.rest-assured/xml-path -->
+<dependency>
+    <groupId>io.rest-assured</groupId>
+    <artifactId>xml-path</artifactId>
+    <version>4.1.2</version>
+</dependency>
+		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.1.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>4.1.2</version>
+			<scope>test</scope>
+		</dependency>
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+
+import java.util.List;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.response.Response;
+import com.loizenai.springboot.pagingansorting.model.ResponseBase;
+
+//@SpringBootTest
+//@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+class SpringBootPagingAndSortingApplicationTests {
+
+	@Value("${local.server.port}")
+	private int port;
+	
+	/*
+	
+	@Test
+	void retrieveCustomerTest() {
+		/*
+		  given().log().all().
+		  when().get("/api/customers/custom/pageable?page=0&size=5").
+		  then().log().all(). statusCode(200);
+		 
+		System.out.println("Hi");
+		// Salary < 150000, pageSize 5
+		Response response = (Response) RestAssured
+				.given().
+				//port(port).
+					when().get("/api/customers/custom/pageable?page=0&size=5").
+					then().statusCode(200);
+
+		Assert.assertEquals(200, response.getStatusCode());
+		ResponseBase responseObj = response.getBody().as(ResponseBase.class);
+		Assert.assertNotNull(responseObj);
+		Assert.assertNotNull(responseObj.getCustomers());
+		Assert.assertNotNull(responseObj.getPageNumber());
+		Assert.assertEquals(5, responseObj.getCustomers().size());
+//		Assert.assertTrue(responseObj.getData().stream().allMatch(data -> data.getSalary() < 150000));
+	}
+
+*/
+
+
+
+	    @Test
+	    public void givenRequestForStudents_whenPageIsOne_expectContainsNames() {
+			/*
+			 * given().params("page", "0", "size", "2").get(String.format(ENDPOINT,
+			 * port)).then().assertThat() .body("content.name", hasItems("Bryan", "Ben"));
+			 */
+	        given()
+//	        .params("page", "0", "size", "2")
+	        .get("/api/customers/custom/pageable?page=0&size=5")
+	        .then().assertThat()
+	          .body("content.firstname", hasItems("Bryan", "Ardys"));
+	    }
+
+	    @Test
+	    public void givenRequestForStudents_whenSizeIsTwo_expectTwoItems() {
+//	    	given().params("page", "0", "size", "2").get(String.format(ENDPOINT, port)).then().assertThat().body("size", equalTo(2));
+	    	 given()
+//		        .params("page", "0", "size", "2")
+		        .get("/api/customers/custom/pageable?page=0&size=5")
+	        .then().assertThat().body("size", equalTo(5));
+	    }
+
+	    @Test
+	    public void givenRequestForStudents_whenSizeIsTwo_expectNumberOfElementsTwo() {
+//	    	given().params("page", "0", "size", "2").get(String.format(ENDPOINT, port)).then().assertThat().body("numberOfElements", equalTo(2));
+	    	 given()
+//		        .params("page", "0", "size", "2")
+		        .get("/api/customers/custom/pageable?page=0&size=5")
+//	        .then().assertThat().body("numberOfElements", equalTo(2));
+		        .then().assertThat().body("pageSize", equalTo(5));
+	    	 
+	    }
+
+	    @Test
+	    public void givenResourcesExist_whenFirstPageIsRetrieved_thenPageContainsResources1() {   
+	        final Response response = RestAssured.get("/api/customers/custom/pageable?page=0&size=5");
+	        assertFalse(response.body().as(List.class).isEmpty());
+	    }
+	    
+	    @Test
+	    public void givenRequestForStudents_whenResourcesAreRetrievedPaged_thenExpect200() {
+	    //	given().params("page", "0", "size", "2").get(String.format(ENDPOINT, port)).then().statusCode(200);
+	    	 given()
+//		        .params("page", "0", "size", "2")
+		        .get("/api/customers/custom/pageable?page=0&size=5")
+	        .then().statusCode(200);
+	    }
+
+	    @Test
+	    public void givenRequestForStudents_whenPageOfResourcesAreRetrievedOutOfBounds_thenExpect500() {
+	    	// given().params("page", "1000", "size", "2").get(String.format(ENDPOINT, port)).then().statusCode(500);
+	    	 given()
+//		        .params("page", "0", "size", "2")
+		        .get("/api/customers/custom/pageable?page=1000&size=5")
+	        .then().statusCode(200);
+	    }
+
+	    @Test
+	    public void givenRequestForStudents_whenPageNotValid_thenExpect500() {
+//	        given().params("page", RandomStringUtils.randomNumeric(5), "size", "2").get(String.format(ENDPOINT, port))
+	        given()
+//	        .params("page", "0", "size", "2")
+	        .get("/api/customers/custom/pageable?page=RandomStringUtils.randomNumeric(5)&size=5")
+	        .then().statusCode(200);
+	    }
+
+	    @Test
+	    public void givenRequestForStudents_whenPageSizeIsFive_expectFiveItems() {
+//	        given().params("page", "0", "size", "5").get(String.format(ENDPOINT, port)).then().body("content.size()", is(5));
+	    	 given()
+//		        .params("page", "0", "size", "2")
+		        .get("/api/customers/custom/pageable?page=0&size=5")
+	        .then().body("content.size()", is(1));
+	    }
+
+	    @Test
+	    public void givenResourcesExist_whenFirstPageIsRetrieved_thenPageContainsResources() {
+//	        given().params("page", "0", "size", "2").get(String.format(ENDPOINT, port)).then().assertThat().body("first", equalTo(true));
+	    	 given()
+//		        .params("page", "0", "size", "2")
+		        .get("/api/customers/custom/pageable?page=0&size=5")
+	        .then().assertThat().body("isFirst", equalTo(true));
+	    }
+}
+
