@@ -305,3 +305,33 @@ class SpringBootPagingAndSortingApplicationTests {
 	    }
 }
 
+
+
+
+Sreedhar Gmail
+https://www.udemy.com/course/spring-boot-microservices-with-spring-cloud-beginner-to-guru/learn/lecture/20194068?src=sac&kw=spring#overview
+		https://stackoverflow.com/questions/55448188/spring-boot-pagination-mockito-repository-findallpageable-returns-null/55448614
+
+https://springframework.guru/testing-spring-boot-restful-services/
+https://www.javatips.net/api/org.springframework.data.domain.pageable
+
+https://www.amitph.com/about/
+https://www.amitph.com/spring-rest-service-exception-handling/
+https://www.amitph.com/testing-spring-data-jdbc/
+https://github.com/amitrp/spring-data-jdbc-examples/blob/master/src/test/java/com/amitph/spring/tutorials/springdatajdbc/repo/StudentRepositoryTest.java
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.guru.model.Blog;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BlogRepository extends PagingAndSortingRepository<Blog,Long> {
+}
+
+
+Plural Sight
+Securing Spring Data REST APIs
+Microservices: The Big Picture
+Java Microservices with Spring Cloud: Developing Services
+
+Spring Framework: Documenting Spring Data Rest APIs with Swagger and Springfox
