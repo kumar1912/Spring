@@ -355,3 +355,8 @@ at org.mapstruct.ap.internal.processor.DefaultVersionInformation.openManifest(De
 at org.mapstruct.ap.internal.processor.DefaultVersionInformation.getLibra
 
 https://stackoverflow.com/questions/65112406/intellij-idea-mapstruct-java-internal-error-in-the-mapping-processor-java-lang
+
+https://github.com/eugenp/tutorials/blob/master/core-java-modules/core-java-collections-list-3/src/main/java/com/baeldung/java/list/CopyListService.java
+https://www.baeldung.com/java-streams-find-list-items
+
+https://stackabuse.com/guide-to-mapstruct-in-java-advanced-mapping-library  
