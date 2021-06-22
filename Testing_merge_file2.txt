@@ -98,3 +98,11 @@ https://suleymanyildirim.org/spring-boot/testing-http-methods-using-mockito-fram
 	    public PagingResponse get1( int page, int size, Specification<Car> spec, HttpHeaders headers, Sort sort) {
           return get(spec, PageRequest.of(page, size, sort));
     }
+	
+	
+https://springframework.guru/mocking-unit-tests-mockito/
+https://stackoverflow.com/questions/50532856/mockmvc-configure-a-header-for-all-requests
+https://stackoverflow.com/questions/18336277/how-to-check-string-in-response-body-with-mockmvc
+https://stackoverflow.com/questions/36752560/springframework-dao-invaliddataaccessresourceusageexception-hibernate-sqlgrammar/36759154
+https://stackoverflow.com/questions/27032433/set-default-page-size-for-jpa-pageable-object
+https://stackoverflow.com/questions/12296642/is-it-possible-to-have-empty-requestparam-values-use-the-defaultvalue
