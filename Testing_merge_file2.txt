@@ -2,6 +2,10 @@ https://www.infoworld.com/article/3543268/junit-5-tutorial-part-2-unit-testing-s
 
 
 https://medium.com/quick-code/spring-boot-how-to-design-efficient-search-rest-api-c3a678b693a0            Spring Boot: how to design an efficient search REST API? ( with Live Demo )
+https://medium.com/fleetx/searching-and-filtering-spring-data-jpa-specification-way-e22bc055229a   ********************************************
+					https://github.com/turkraft/spring-filter 
+							https://spring-filter.herokuapp.com/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config
+https://www.baeldung.com/rest-api-search-language-spring-data-specifications                  *********************		
 
 https://loizenai.com/spring-boot-pagination-filter/#testcase-4-pagination-filtering-sorting-request
 https://github.com/pkainulainen/spring-data-jpa-examples/blob/master/querydsl/src/test/java/net/petrikainulainen/springdata/jpa/web/TodoSearchControllerTest.java
