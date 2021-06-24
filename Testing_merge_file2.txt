@@ -10,6 +10,24 @@ https://www.baeldung.com/rest-api-search-language-spring-data-specifications    
 https://loizenai.com/spring-boot-pagination-filter/#testcase-4-pagination-filtering-sorting-request
 https://github.com/pkainulainen/spring-data-jpa-examples/blob/master/querydsl/src/test/java/net/petrikainulainen/springdata/jpa/web/TodoSearchControllerTest.java
 
+https://www.netsurfingzone.com/hibernate/many-to-many-mapping-annotation-example-in-hibernate-jpa-using-spring-boot-and-oracle/   ********
+https://dzone.com/articles/introduction-to-spring-data-jpa-part-8-many-to-man        *************
+https://attacomsian.com/blog/spring-data-jpa-h2-database
+		https://github.com/attacomsian/code-examples/tree/master/spring-data-jpa              **********jpa-specifications, jpa-sorting, jpa-queries, jpa-pagination
+
+https://github.com/RameshMF/spring-boot-tutorial
+
+https://hellokoding.com/jpa-many-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/
+			Handling Circular Reference of JPA and Hibernate Entity Bidirectional Relationships with Jackson JsonIgnoreProperties
+			Deleting Data with JPQL, CascadeType, and orphanRemoval
+			
+https://stackabuse.com/a-guide-to-jpa-with-hibernate-relationship-mapping			
+https://github.com/dupirefr/stackabuse-articles-code/blob/master/jpa/pom.xml
+
+
+
+https://github.com/LogicalSapien/spring-boot-rest-h2-sample
+
 @Test
     @DisplayName("Test findById Success")
 	@DisplayName("Test findAll")
