@@ -1,8 +1,13 @@
 https://www.netsurfingzone.com/hibernate/many-to-many-mapping-annotation-example-in-hibernate-jpa-using-spring-boot-and-oracle/   ********
 https://dzone.com/articles/introduction-to-spring-data-jpa-part-8-many-to-man        *************
-https://attacomsian.com/blog/spring-data-jpa-h2-database
-		https://github.com/attacomsian/code-examples/tree/master/spring-data-jpa              **********jpa-specifications, jpa-sorting, jpa-queries, jpa-pagination
 
+		https://github.com/attacomsian/code-examples/tree/master/spring-data-jpa              **********jpa-specifications, jpa-sorting, jpa-queries, jpa-pagination
+										(D:\Mphasis_Project_Kick_Off_DOC\code-examples-master (1)\spring-data-jpa)
+		https://stackoverflow.com/questions/64570747/spring-data-jpa-to-filter-by-multiple-fields-and-return-projections
+https://medium.com/fleetx/searching-and-filtering-spring-data-jpa-specification-way-e22bc055229a   ********************************************
+					https://github.com/turkraft/spring-filter  
+								D:\Mphasis_Project_Kick_Off_DOC\spring-filter-main
+					
 https://github.com/RameshMF/spring-boot-tutorial
 
 https://hellokoding.com/jpa-many-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/
@@ -25,111 +30,8 @@ http://knes1.github.io/blog/2015/2015-10-19-streaming-mysql-results-using-java8-
 https://www.baeldung.com/spring-app-setup-with-csv-files
 
 https://www.baeldung.com/java-mapstruct-mapping-collections
-
-
-_______________________________________________________________________________________________________________________
-
-	public class Role 
-	
-	@JsonIgnore
-	@ManyToMany(mappedBy="roles")
-	private List<User> users;
-	
-	
-	@Table(name = "tr_rates_view")
-public class RatesInfo implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-    public RatesInfo() {
-		super();
-	}
-
-	@Id
-    @NotNull
-	@Column(name = "sl")
-	private String sl;
-
-	@Column(name = "supplier_name")
-	private String dmc;
-
-    @Null
-    @Column(name = "contract_id")
-    private String contract_id;
-
-    @Null
-	@Column(name = "country_name")
-    private String country;
-
-
-
-    public String getContract_id() {
-		return contract_id;
-	}
-
-	public void setContract_id(String contract_id) {
-		this.contract_id = contract_id;
-	}
-
-
-	@Null
-    @Column(name = "destination")
-    private String destination;
-
-    @Null
-    @Column(name = "source_market_name")
-    private String source_markets;
-
-
-    @Null
-    @Column(name = "transfer_type")
-    private String transfer_type;
-
-    @Null
-    @Column(name = "note")
-    private String note;
-    
-    @Null
-    @Column(name = "cmd_code_from")
-    private String cmd_code_from;
-
-    @Null
-    @Column(name = "cmd_code_to")
-    private String cmd_code_to;
-
-    public String getNote() {
-		return note;
-	}
-
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
-
-	@Null
-    @Column(name = "valid_from")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Date valid_from;
-
-    @Null
-    @Column(name = "valid_to")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Date valid_to;
-
-    @Null
-    @Column(name = "`from`")
-    private String from;
-
-    @Null
-    @Column(name = "`to`")
-    private String to;
-
-    @Null
-    @Column(name = "transport_method")
-    private String transport_method;
-
-	
+https://auth0.com/blog/how-to-automatically-map-jpa-entities-into-dtos-in-spring-boot-using-mapstruct/            ***************
+			https://github.com/Tonel/mapstruct-auth0  (D:\Mphasis_Project_Kick_Off_DOC\mapstruct-auth0-master)
 	
 	@Data
 @NoArgsConstructor
