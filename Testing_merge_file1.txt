@@ -1,1 +1,71 @@
 Merge Example
+	@Transactional
+    @Modifying
+    @Query(value="update recipient_template set active=false where recipient_temp_id=?1",nativeQuery = true)
+	Integer deletTemp(String tempId);
+
+	@Override
+	public Integer deletTemp(String templateId) {
+		// TODO Auto-generated method stub
+		return templateRepository.deletTemp(templateId);
+	}
+
+public Integer deletTemp(String templateId);
+
+@GetMapping("/delete")
+@ResponseBody
+public ResponseEntity<Map<String,String>> deleteTemplate(String templateId) {
+	Integer updateFlag = templateservService.deletTemp(templateId);
+	Map<String,String> response = new HashMap<String, String>();
+	if(updateFlag!=0) {
+		response.put("message", "sucess");
+		return ResponseEntity.accepted().body(response);
+	} else {
+		response.put("message", "failure");
+		return ResponseEntity.badRequest().body(response);
+	}
+}
+
+
+	@Transactional
+	  @Modifying
+	  @Query(value="delete from tr_currency_history where currency_history_id=:currencyHisId" , nativeQuery = true)
+	 public void deleteCurrencyHisId(@Param("currencyHisId")Long currencyHisId);
+
+	@Transactional
+	@Modifying
+	@Query(value = "delete from tr_contract_history where id in(:contractHisId)", nativeQuery = true)
+	public void deleteContrctHisData(@Param("contractHisId") List<Integer> contractHisId);
+	
+
+	@Transactional
+	  @Modifying
+	  @Query(value="delete from tr_currency_history where currency_history_id=:currencyHisId" , nativeQuery = true)
+	 public void deleteCurrencyHisId(@Param("currencyHisId")Long currencyHisId);
+
+	  @Modifying
+	  @Query(value="delete from tr_inter_hotel_rates where sequence_number IN(:sequenceNumberList)" , nativeQuery = true)
+	  	public void deleteAllIds(@Param("sequenceNumberList")List<Integer> sequenceNumberList);
+	  
+
+	@Transactional
+		@Modifying
+		@Query(value = "delete from tr_transfer_type_history where transfer_type_id IN(:transferTypeIdList)", nativeQuery = true)
+		public void deleteAllTransferTypeHisData(@Param("transferTypeIdList") List<Integer> transferTypeIdList);
+		
+@Query("SELECT transfer_type_id FROM TransferTypeHistory t where t.contract_id = :contract_id and t.contract_version= :version")
+	    public  List<Integer>  findTransferTypeId(@Param("contract_id") String contract_id,@Param("version") double version );
+
+ 
+	 @Query("SELECT t FROM TransferTypeHistory t where t.contract_id = :contract_id and t.contract_version= :version")
+	    public  Set<TransferTypeHistory>  findByContractIDAndVersion(@Param("contract_id") String contract_id,@Param("version") double version );
+
+@Query("SELECT t FROM GatewayExceptionRateHistory t where t.contract_id = :contract_id and t.contract_version= :version")
+    public  Set<GatewayExceptionRateHistory>  findByContractIDAndVersion(@Param("contract_id") String contract_id,@Param("version") double version );
+	
+ @Query("SELECT transfer_type_id FROM TransferTypeHistory t where t.contract_id = :contract_id and t.contract_version= :version")
+	    public  List<Integer>  findTransferTypeId(@Param("contract_id") String contract_id,@Param("version") double version );
+	 
+	 @Query("SELECT t FROM TransferTypeHistory t where t.contract_id = :contract_id and t.contract_version= :version")
+	    public  Set<TransferTypeHistory>  findByContractIDAndVersion(@Param("contract_id") String contract_id,@Param("version") double version );
+	 
