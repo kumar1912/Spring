@@ -1,0 +1,37 @@
+https://www.netsurfingzone.com/hibernate/many-to-many-mapping-annotation-example-in-hibernate-jpa-using-spring-boot-and-oracle/   ********
+https://dzone.com/articles/introduction-to-spring-data-jpa-part-8-many-to-man        *************
+
+		https://github.com/attacomsian/code-examples/tree/master/spring-data-jpa              **********jpa-specifications, jpa-sorting, jpa-queries, jpa-pagination
+										(D:\Mphasis_Project_Kick_Off_DOC\code-examples-master (1)\spring-data-jpa)
+		https://stackoverflow.com/questions/64570747/spring-data-jpa-to-filter-by-multiple-fields-and-return-projections
+https://medium.com/fleetx/searching-and-filtering-spring-data-jpa-specification-way-e22bc055229a   ********************************************
+					https://github.com/turkraft/spring-filter  
+								D:\Mphasis_Project_Kick_Off_DOC\spring-filter-main
+					
+https://github.com/RameshMF/spring-boot-tutorial
+
+https://hellokoding.com/jpa-many-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/
+			Handling Circular Reference of JPA and Hibernate Entity Bidirectional Relationships with Jackson JsonIgnoreProperties
+			Deleting Data with JPQL, CascadeType, and orphanRemoval
+			
+https://stackabuse.com/a-guide-to-jpa-with-hibernate-relationship-mapping			
+https://github.com/dupirefr/stackabuse-articles-code/blob/master/jpa/pom.xml
+
+
+
+https://github.com/LogicalSapien/spring-boot-rest-h2-sample
+
+http://knes1.github.io/blog/2015/2015-10-19-streaming-mysql-results-using-java8-streams-and-spring-data.html
+
+
+
+https://examples.javacodegeeks.com/spring-boot-download-csv-file-example/
+http://knes1.github.io/blog/2015/2015-10-19-streaming-mysql-results-using-java8-streams-and-spring-data.html
+https://www.baeldung.com/spring-app-setup-with-csv-files
+
+https://www.baeldung.com/java-mapstruct-mapping-collections
+https://auth0.com/blog/how-to-automatically-map-jpa-entities-into-dtos-in-spring-boot-using-mapstruct/            ***************  mapstruct, Many to Many
+			https://github.com/Tonel/mapstruct-auth0  (D:\Mphasis_Project_Kick_Off_DOC\mapstruct-auth0-master)
+			https://github.com/Tonel/mapstruct-auth0
+https://stackabuse.com/data-transfer-object-pattern-in-java-implementation-and-mapping
+				https://github.com/VictoriaAmazonka/stackabuse_dto
