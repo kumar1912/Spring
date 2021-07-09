@@ -35,3 +35,11 @@ https://auth0.com/blog/how-to-automatically-map-jpa-entities-into-dtos-in-spring
 			https://github.com/Tonel/mapstruct-auth0
 https://stackabuse.com/data-transfer-object-pattern-in-java-implementation-and-mapping
 				https://github.com/VictoriaAmazonka/stackabuse_dto
+				
+Junit				
+https://www.baeldung.com/integration-testing-in-spring
+https://reflectoring.io/spring-boot-web-controller-test/
+https://frontbackend.com/spring-boot/spring-boot-2-junit-5-mockito
+https://spring.io/guides/gs/testing-web/
+https://www.infoworld.com/article/3543268/junit-5-tutorial-part-2-unit-testing-spring-mvc-with-junit-5.html?page=3
+https://springframework.guru/testing-spring-boot-restful-services/
