@@ -1,3 +1,9 @@
+https://thorben-janssen.com/how-to-join-unrelated-entities/
+https://medium.com/@techkarmo/spring-data-jpa-join-with-unrelated-entities-with-help-of-jpql-in-spring-boot-application-c358e11512bd
+https://www.programmersought.com/article/7600921460/
+https://www.codeproject.com/Questions/5255697/Right-approach-for-aggregating-data-from-multiple
+https://roytuts.com/spring-boot-data-jpa-left-right-inner-and-cross-join-examples/
+
 Merge Example
 https://onlyfullstack.blogspot.com/2019/02/setting-up-sonar-server-locally.html
 https://onlyfullstack.blogspot.com/2019/02/integrate-jacoco-plugin-with-sonar-and-maven.html  next....
