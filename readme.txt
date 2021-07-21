@@ -1,3 +1,12 @@
+		int numTasks = factor * Runtime.getRuntime().availableProcessors();
+		Phaser phaser = new Phaser();
+
+		Thread threads[] = new Thread[numTasks];
+		KeywordExtractionTask tasks[] = new KeywordExtractionTask[numTasks];
+		
+		phaser.arriveAndAwaitAdvance()
+		
+
 Tool :
 https://www.mailinator.com/
 
