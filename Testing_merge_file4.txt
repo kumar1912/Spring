@@ -1,3 +1,21 @@
+https://www.callicoder.com/hibernate-spring-boot-jpa-one-to-many-mapping-example/
+https://hellokoding.com/jpa-one-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/
+https://hellokoding.com/mapping-jpa-hibernate-entity-and-dto-with-mapstruct/
+https://hellokoding.com/jpa-and-hibernate-one-to-many-unidirectional-spring-boot/
+
+https://medium.com/@a.adendrata/converting-dto-and-entity-c24cba9cef4  -- Time examples
+
+https://github.com/VictoriaAmazonka/stackabuse_dto/blob/master/src/main/java/com/stackabuse/dtoexample/controller/MapController.java
+https://stackabuse.com/data-transfer-object-pattern-in-java-implementation-and-mapping
+https://www.youtube.com/watch?v=N3uAMuC-bxo  DTO to Entity Video good Example
+https://stackabuse.com/guide-to-mapstruct-in-java-advanced-mapping-library               *************
+			https://github.com/TaimoorChoudhary/mapstruct
+				https://github.com/VictoriaAmazonka/stackabuse_dto
+https://www.programmersought.com/article/20453502320/
+https://www.amitph.com/spring-entity-to-dto/         -- Junit test Case
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 https://thorben-janssen.com/how-to-join-unrelated-entities/
 https://medium.com/@techkarmo/spring-data-jpa-join-with-unrelated-entities-with-help-of-jpql-in-spring-boot-application-c358e11512bd
 https://www.programmersought.com/article/7600921460/
