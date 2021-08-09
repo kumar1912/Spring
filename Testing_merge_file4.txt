@@ -149,6 +149,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -237,10 +238,29 @@ public class Application {
             movieRepository.findAll(msDateTime4).forEach(System.out::println);*/
             System.out.println("______________________________________________________________________________");
 
-            // search movies by watch time >= 150 and sort by `title`
+/*            // search movies by watch time >= 150 and sort by `title`
             MovieSpecification msDateTime5 = new MovieSpecification();
-            msDateTime5.add(new SearchCriteria("startDate", "2019-07-27T07:07:32", "2021-07-27T07:12:32", SearchOperation.BETWEEN));
+            msDateTime5.add(new SearchCriteria("startDate", "2021-07-27T07:12:32", "2019-07-27T07:07:32", SearchOperation.BETWEEN));
             movieRepository.findAll(msDateTime5).forEach(System.out::println);
+            List<Movie> msDateTimeList = movieRepository.findAll(msDateTime5);
+            msDateTimeList.forEach(System.out::println);
+            System.out.println("______________________________________________________________________________");*/
+
+ /*           // search movies by watch time >= 150 and sort by `title`
+            MovieSpecification msDateTime7 = new MovieSpecification();
+            msDateTime7.add(new SearchCriteria("startDate", "2021-07-27T07:12:32", SearchOperation.LESS_THAN_EQUAL));
+            msDateTime7.add(new SearchCriteria("startDate", "2021-07-27T07:07:32", SearchOperation.GREATER_THAN_EQUAL));
+            List<Movie> msDateTimeList7 = movieRepository.findAll(msDateTime7);
+            msDateTimeList7.forEach(System.out::println);
+            System.out.println("______________________________________________________________________________");
+*/
+
+            // search movies by watch time >= 150 and sort by `title`
+            MovieSpecification msDateTime8 = new MovieSpecification();
+            msDateTime8.add(new SearchCriteria("releaseYear", 2009, SearchOperation.LESS_THAN_EQUAL));
+            msDateTime8.add(new SearchCriteria("releaseYear", 2004, SearchOperation.GREATER_THAN_EQUAL));
+            List<Movie> msDateTimeList8 = movieRepository.findAll(msDateTime8);
+            msDateTimeList8.forEach(System.out::println);
             System.out.println("______________________________________________________________________________");
 
 
@@ -256,6 +276,7 @@ public class Application {
         };
     }
 }
+
 ---------------
 
 public enum SearchOperation {
