@@ -1,3 +1,45 @@
+Date :
+package main.java.com;
+
+import java.time.LocalDateTime;
+
+public class Test2 {
+
+	public static void main(String[] args) {
+		String date = "2017-03-08T12:30:54"; 
+		LocalDateTime ldt = LocalDateTime.parse(date);
+		LocalDateTime ldt1 = LocalDateTime.parse(date);
+		LocalDateTime [] lt = new LocalDateTime[2];
+		lt[0] = ldt;
+		lt[1] = ldt1;
+		
+		System.out.println("origional date as string: " + date); 
+		System.out.println("generated LocalDateTime: " + ldt);
+		
+		System.out.println(dateFormatterForLogs(ldt));
+		LocalDateTime localdatetime = LocalDateTime.of(ldt.getYear(),ldt.getMonth(),ldt.getDayOfMonth(), ldt.getHour(),ldt.getMinute(),ldt.getSecond());
+		System.out.println("generated LocalDateTime1 : " + localdatetime);
+	}
+
+	private static String dateFormatterForLogs(LocalDateTime dateTime) {
+		  String dateString = "[";
+		  dateString += dateTime.getDayOfMonth() + "--";
+		  dateString += dateTime.getMonthValue() + "--";
+		  dateString += dateTime.getYear() + "--";
+		  dateString += dateTime.getHour() + ":";
+		  dateString += dateTime.getMinute() + ":";
+		  dateString += dateTime.getSecond();
+		  dateString += "] ";
+		  return dateString;
+		}
+
+}
+
+
+
+
+
+
 https://reflectoring.io/spring-data-specifications/ - *************  Specifications are inspired by the Domain-Driven Design “Specification” pattern
 https://medium.com/fleetx-engineering/searching-and-filtering-spring-data-jpa-specification-way-e22bc055229a
 https://www.logicbig.com/tutorials/spring-framework/spring-data/specifications.html
@@ -149,7 +191,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -163,22 +206,34 @@ public class Application {
     @Bean
     public CommandLineRunner specificationsDemo(MovieRepository movieRepository) {
         return args -> {
-
+            String time = "2019-03-27T10:15:30";
+            LocalDateTime localTimeObj = LocalDateTime.parse(time);
+            DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             // create new movies
             movieRepository.saveAll(Arrays.asList(
-                    new Movie("Troy", "Drama", 7.2, 196, 2004,"2021-07-27T07:07:32"),
-                    new Movie("The Godfather", "Crime", 9.2, 178, 1972,"2020-07-27T07:07:32"),
-                    new Movie("Invictus", "Sport", 7.3, 135, 2009,"2019-07-27T07:07:32"),
-                    new Movie("Black Panther", "Action", 7.3, 135, 2018,"2018-07-27T07:07:32"),
-                    new Movie("Joker", "Drama", 8.9, 122, 2018,"2017-07-27T07:07:32"),
-                    new Movie("Iron Man", "Action", 8.9, 126, 2008,"2016-07-27T07:07:32"),
 
-            new Movie("Troy", "Drama1", 7.2, 196, 2004,"2021-07-27T07:07:32"),
-                    new Movie("The Godfather1", "Crime", 9.2, 178, 1972,"2021-07-27T07:08:32"),
-                    new Movie("Invictus1", "Sport", 7.3, 135, 2009,"2021-07-27T07:09:32"),
-                    new Movie("Black Panther1", "Action", 7.3, 135, 2018,"2021-07-27T07:10:32"),
-                    new Movie("Joker1", "Drama", 8.9, 122, 2018,"2021-07-27T07:11:32"),
-                    new Movie("Iron Man1", "Action", 8.9, 126, 2008,"2021-07-27T07:12:32")
+
+                    new Movie("Troy2", "Drama", 7.2, 196, 2004,"2021-07-27 7:07:32",  localTimeObj),
+                    new Movie("The Godfather2", "Crime", 9.2, 178, 1972,"2020-07-27 7:07:32",  localTimeObj.minusYears(1)),
+                    new Movie("Invictus2", "Sport", 7.3, 135, 2009,"2019-07-27 7:07:32",  localTimeObj.minusYears(2)),
+                    new Movie("Black Panther2", "Action", 7.3, 135, 2018,"2018-07-27 7:07:32",  localTimeObj.minusYears(3)),
+                    new Movie("Joker2", "Drama", 8.9, 122, 2018,"2017-07-27 7:07:32",  localTimeObj.minusYears(4)),
+                    new Movie("Iron Man2", "Action", 8.9, 126, 2008,"2016-07-27 7:07:32",  localTimeObj.minusYears(5)),
+
+
+                    new Movie("Troy", "Drama", 7.2, 196, 2004,"2021-07-27T07:07:32",  localTimeObj),
+                    new Movie("The Godfather", "Crime", 9.2, 178, 1972,"2020-07-27T07:07:32",  localTimeObj.minusYears(1)),
+                    new Movie("Invictus", "Sport", 7.3, 135, 2009,"2019-07-27T07:07:32",  localTimeObj.minusYears(2)),
+                    new Movie("Black Panther", "Action", 7.3, 135, 2018,"2018-07-27T07:07:32",  localTimeObj.minusYears(3)),
+                    new Movie("Joker", "Drama", 8.9, 122, 2018,"2017-07-27T07:07:32",  localTimeObj.minusYears(4)),
+                    new Movie("Iron Man", "Action", 8.9, 126, 2008,"2016-07-27T07:07:32",  localTimeObj.minusYears(5)),
+
+            new Movie("Troy", "Drama1", 7.2, 196, 2004,"2021-07-27T07:07:32",  localTimeObj.minusYears(6)),
+                    new Movie("The Godfather1", "Crime", 9.2, 178, 1972,"2021-07-27T07:08:32",  localTimeObj.minusYears(7)),
+                    new Movie("Invictus1", "Sport", 7.3, 135, 2009,"2021-07-27T07:09:32",  localTimeObj.minusYears(8)),
+                    new Movie("Black Panther1", "Action", 7.3, 135, 2018,"2021-07-27T07:10:32",  localTimeObj.minusYears(9)),
+                    new Movie("Joker1", "Drama", 8.9, 122, 2018,"2021-07-27T07:11:32",  localTimeObj.minusYears(10)),
+                    new Movie("Iron Man1", "Action", 8.9, 126, 2008,"2021-07-27T07:12:32",  localTimeObj.minusYears(11))
             ));
 
             /*// search movies by `genre`
@@ -236,23 +291,23 @@ public class Application {
             MovieSpecification msDateTime4 = new MovieSpecification();
             msDateTime4.add(new SearchCriteria("startDate", "2021-07-27T07:07:32", SearchOperation.EQUAL));
             movieRepository.findAll(msDateTime4).forEach(System.out::println);*/
-            System.out.println("______________________________________________________________________________");
+           /* System.out.println("______________________________________________________________________________");
 
-/*            // search movies by watch time >= 150 and sort by `title`
+           // search movies by watch time >= 150 and sort by `title`
             MovieSpecification msDateTime5 = new MovieSpecification();
             msDateTime5.add(new SearchCriteria("startDate", "2021-07-27T07:12:32", "2019-07-27T07:07:32", SearchOperation.BETWEEN));
             movieRepository.findAll(msDateTime5).forEach(System.out::println);
             List<Movie> msDateTimeList = movieRepository.findAll(msDateTime5);
             msDateTimeList.forEach(System.out::println);
             System.out.println("______________________________________________________________________________");*/
-
- /*           // search movies by watch time >= 150 and sort by `title`
+           /* System.out.println("______________________________________Start________________________________________");
+            // search movies by watch time >= 150 and sort by `title`
             MovieSpecification msDateTime7 = new MovieSpecification();
-            msDateTime7.add(new SearchCriteria("startDate", "2021-07-27T07:12:32", SearchOperation.LESS_THAN_EQUAL));
-            msDateTime7.add(new SearchCriteria("startDate", "2021-07-27T07:07:32", SearchOperation.GREATER_THAN_EQUAL));
+           // msDateTime7.add(new SearchCriteria("startDate", "2017-07-27 7:07:32", SearchOperation.LESS_THAN_EQUAL));
+            msDateTime7.add(new SearchCriteria("startDate", "2021-07-27 7:07:32", SearchOperation.EQUAL));
             List<Movie> msDateTimeList7 = movieRepository.findAll(msDateTime7);
             msDateTimeList7.forEach(System.out::println);
-            System.out.println("______________________________________________________________________________");
+            System.out.println("___________________________________End___________________________________________");
 */
 
             // search movies by watch time >= 150 and sort by `title`
@@ -261,9 +316,17 @@ public class Application {
             msDateTime8.add(new SearchCriteria("releaseYear", 2004, SearchOperation.GREATER_THAN_EQUAL));
             List<Movie> msDateTimeList8 = movieRepository.findAll(msDateTime8);
             msDateTimeList8.forEach(System.out::println);
-            System.out.println("______________________________________________________________________________");
+             System.out.println("___________________________________End___________________________________________");
 
 
+            System.out.println("___________________________________Start___________________________________________");
+
+            MovieSpecification msDateTime9 = new MovieSpecification();
+            msDateTime9.add(new SearchCriteria("localDateTime", localTimeObj,  localTimeObj.minusYears(6), SearchOperation.BETWEEN));
+//            msDateTime9.add(new SearchCriteria("localDateTime", LocalDateTime.now(), SearchOperation.LESS_THAN_EQUAL));
+            List<Movie> msDateTimeList9= movieRepository.findAll(msDateTime9);
+            msDateTimeList9.forEach(System.out::println);
+            System.out.println("___________________________________End___________________________________________");
 
 /*            System.out.println("______________________________________________________________________________");
             // search movies by title <> 'white' and paginate results
@@ -276,6 +339,7 @@ public class Application {
         };
     }
 }
+
 
 ---------------
 
