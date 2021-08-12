@@ -3,6 +3,16 @@ parameter value did not match expected type java.time.localdatetime (n/a)
 https://www.titanwolf.org/Network/q/5c86eca8-0d90-4ec9-b3ec-a8012a4c4233/y
 https://stackoverflow.com/questions/52662709/parameter-value-2018-04-08t110244-did-not-match-expected-type-java-util-dat
 https://stackoverflow.com/questions/65193840/parameter-value-2020-12-08t0735-did-not-match-expected-type-java-time-locald
+https://javarevisited.blogspot.com/2017/08/how-to-format-parse-dates-with-LocalDateTime-Java-8.html#axzz73I5PR0i8     ***********
+
+https://howtodoinjava.com/java/date-time/java-localdatetime-class/
+https://howtodoinjava.com/java/date-time/localdatetime-parse/
+https://www.baeldung.com/java-8-date-time-intro
+https://www.tabnine.com/code/java/classes/java.time.LocalDateTime   ********
+https://howtodoinjava.com/java/date-time/java-localdatetime-class/
+https://www.java67.com/2016/04/how-to-convert-string-to-localdatetime-in-java8-example.html
+
+
 
 Date :
 package main.java.com;
