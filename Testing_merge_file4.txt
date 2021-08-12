@@ -1,3 +1,9 @@
+parameter value did not match expected type java.time.localdatetime (n/a)
+
+https://www.titanwolf.org/Network/q/5c86eca8-0d90-4ec9-b3ec-a8012a4c4233/y
+https://stackoverflow.com/questions/52662709/parameter-value-2018-04-08t110244-did-not-match-expected-type-java-util-dat
+https://stackoverflow.com/questions/65193840/parameter-value-2020-12-08t0735-did-not-match-expected-type-java-time-locald
+
 Date :
 package main.java.com;
 
