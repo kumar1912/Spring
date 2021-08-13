@@ -9,10 +9,19 @@ https://howtodoinjava.com/java/date-time/java-localdatetime-class/
 https://howtodoinjava.com/java/date-time/localdatetime-parse/
 https://www.baeldung.com/java-8-date-time-intro
 https://www.tabnine.com/code/java/classes/java.time.LocalDateTime   ********
-https://howtodoinjava.com/java/date-time/java-localdatetime-class/
 https://www.java67.com/2016/04/how-to-convert-string-to-localdatetime-in-java8-example.html
 
+https://thorben-janssen.com/map-date-time-api-jpa-2-2/
+https://thorben-janssen.com/persist-localdate-localdatetime-jpa/
+https://medium.com/swlh/spring-boot-and-the-localdate-request-parameter-2c9cdbb085bb        *********
+https://vladmihalcea.com/date-timestamp-jpa-hibernate/     --Configure UTC in different ways
 
+https://www.javadevjournal.com/java/java-8-format-localdatetime/
+https://www.tabnine.com/code/java/methods/java.time.LocalDateTime/getHour  **********Test Case **************
+https://www.logicbig.com/tutorials/java-ee-tutorial/jpa/criteria-api-between-operator.html   *****
+https://stackoverflow.com/questions/35881681/java-time-format-datetimeparseexception-text-could-not-be-parsed-at-index-21/35881898
+
+http://www.mastertheboss.com/hibernate-jpa/quickstart-tutorials-hibernate-jpa/using-localdate-and-localdatetime-with-jpa/*******************************
 
 Date :
 package main.java.com;
@@ -451,3 +460,405 @@ public class SearchCriteria {
  else if (criteria.getOperation().equals(SearchOperation.BETWEEN)) {
                 predicates.add(builder.between(root.get(criteria.getKey()), criteria.getValue().toString(), criteria.getValue().toString()));
             }
+	    
+__________________________________________________________________________________________________________________________________
+
+package com.logicbig.example;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+public class ExampleMain2 {
+    private static EntityManagerFactory entityManagerFactory =
+            Persistence.createEntityManagerFactory("example-unit");
+
+    public static void main(String[] args) {
+        try {
+            persistEmployees();
+//            findEmployeeBySalaryRange();
+//            findEmployeeBySalaryRange2();
+            findEmployeeByJoinDate();
+        } finally {
+            entityManagerFactory.close();
+        }
+    }
+
+	/*
+	 * private static void findEmployeeBySalaryRange() {
+	 * System.out.println("-- Employee with salary BETWEEN 2000 and 4000 --");
+	 * EntityManager em = entityManagerFactory.createEntityManager();
+	 * CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+	 * CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+	 * Root<Employee> employee = query.from(Employee.class); query.select(employee)
+	 * // .where(criteriaBuilder.between(employee.get(Employee_.salary), 2000L,
+	 * 4000L)); .where(criteriaBuilder.between(employee.get("salary"), 2000L,
+	 * 4000L)); List<Employee> resultList = em.createQuery(query).getResultList();
+	 * resultList.forEach(System.out::println); em.close(); }
+	 */
+
+	/*
+	 * private static void findEmployeeBySalaryRange2() { System.out.
+	 * println("-- Employee with salary BETWEEN supervisor's salary and 4000 --");
+	 * EntityManager em = entityManagerFactory.createEntityManager();
+	 * CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+	 * CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+	 * Root<Employee> employee = query.from(Employee.class); Join<Employee,
+	 * Employee> supervisor = employee.join(Employee_.supervisor);
+	 * query.select(employee)
+	 * .where(criteriaBuilder.between(employee.get(Employee_.salary),
+	 * supervisor.get(Employee_.salary), criteriaBuilder.literal(4000L)));
+	 * List<Employee> resultList = em.createQuery(query).getResultList();
+	 * resultList.forEach(System.out::println); em.close(); }
+	 */
+
+    private static void findEmployeeByJoinDate() {
+    	
+    	String time = "2019-03-27T10:15:30";
+        LocalDateTime localTimeObj = LocalDateTime.parse(time);
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        LocalDateTime localTimeObj = LocalDateTime.parse(time, formatter1);
+        
+        System.out.println("-- Employee with join date BETWEEN '1990-01-01' and '2010-05-01' --");
+        EntityManager em = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> employee = query.from(Employee.class);
+        System.out.println("LocalDateTime.now().minusYears(6)"+LocalDateTime.now().minusYears(4));
+        query.select(employee)
+//             .where(criteriaBuilder.between(employee.get(Employee_.joinDate),
+        
+				/*
+				 * .where(criteriaBuilder.between(employee.get("localDateTime"),
+				 * LocalDateTime.now().minusYears(6), //LocalDateTime.of(2019, 03,27, 0, 0, 0)
+				 * LocalDateTime.of(2019, 03,27, 0, 0, 0) )
+				 */
+        		
+        		.where(criteriaBuilder.lessThan(employee.get("localDateTime"),
+                		LocalDateTime.of(2019, 03,27, 0, 0, 0)
+                	)
+
+//             .orderBy(criteriaBuilder.desc(employee.get(Employee_.joinDate)));
+        );
+        
+        List<Employee> resultList = em.createQuery(query).getResultList();
+        resultList.forEach(System.out::println);
+        em.close();
+    }
+    
+    
+
+    private static Timestamp localToTimeStamp(LocalDate date) {
+        return Timestamp.from(date.atStartOfDay().toInstant(ZoneOffset.UTC));
+    }
+
+    public static void persistEmployees() {
+    	
+    	String time = "2019-03-27 10:15:30";
+       // LocalDateTime localTimeObj = LocalDateTime.parse(time);
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime localTimeObj = LocalDateTime.parse(time, formatter1);
+        Employee employee1 = Employee.create("Diana", 3000, LocalDate.of(1999, 11, 15), "2020-07-27 7:07:32", localTimeObj.minusYears(4));
+        Employee employee2 = Employee.create("Rose", 4000, LocalDate.of(2011, 5, 1), "07/27/2020",  localTimeObj.minusYears(1));
+        Employee employee3 = Employee.create("Denise", 1500, LocalDate.of(2006, 1, 10), "07/27/2019",  localTimeObj.minusYears(2));
+        Employee employee4 = Employee.create("Mike", 2000, LocalDate.of(2015, 8, 20), "07/27/2018",  localTimeObj.minusYears(3));
+        employee1.setSupervisor(employee4);
+        employee2.setSupervisor(employee1);
+        employee3.setSupervisor(employee1);
+        employee4.setSupervisor(null);
+
+
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(employee1);
+        em.persist(employee2);
+        em.persist(employee3);
+        em.persist(employee4);
+        em.getTransaction().commit();
+        em.close();
+        System.out.println("-- employee persisted --");
+        System.out.println(employee1);
+        System.out.println(employee2);
+        System.out.println(employee3);
+        System.out.println(employee4);
+    }
+}
+
+INFO: HHH000206: hibernate.properties not found
+Aug 13, 2021 9:33:09 AM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+Aug 13, 2021 9:33:09 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+Aug 13, 2021 9:33:09 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001005: using driver [org.h2.Driver] at URL [jdbc:h2:mem:test;DB_CLOSE_DELAY=-1]
+Aug 13, 2021 9:33:09 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001001: Connection properties: {}
+Aug 13, 2021 9:33:09 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001003: Autocommit mode: false
+Aug 13, 2021 9:33:09 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+INFO: HHH000115: Hibernate connection pool size: 20 (min=1)
+Aug 13, 2021 9:33:09 AM org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Aug 13, 2021 9:33:10 AM org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@b606cb6] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+Aug 13, 2021 9:33:10 AM org.hibernate.tool.schema.internal.SchemaCreatorImpl applyImportSources
+INFO: HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@e5cbff2'
+-- employee persisted --
+Employee{id=1, name='Diana', joinDate=1999-11-15 05:30:00.0, salary=3000, startDate=2020-07-27 7:07:32, localDateTime=2015-03-27T10:15:30, supervisor=Mike}
+Employee{id=2, name='Rose', joinDate=2011-05-01 05:30:00.0, salary=4000, startDate=07/27/2020, localDateTime=2018-03-27T10:15:30, supervisor=Diana}
+Employee{id=3, name='Denise', joinDate=2006-01-10 05:30:00.0, salary=1500, startDate=07/27/2019, localDateTime=2017-03-27T10:15:30, supervisor=Diana}
+Employee{id=4, name='Mike', joinDate=2015-08-20 05:30:00.0, salary=2000, startDate=07/27/2018, localDateTime=2016-03-27T10:15:30, supervisor=null}
+-- Employee with join date BETWEEN '1990-01-01' and '2010-05-01' --
+LocalDateTime.now().minusYears(6)2017-08-13T09:33:11.123436400
+Aug 13, 2021 9:33:11 AM org.hibernate.hql.internal.QueryTranslatorFactoryInitiator initiateService
+INFO: HHH000397: Using ASTQueryTranslatorFactory
+Employee{id=1, name='Diana', joinDate=1999-11-15 05:30:00.0, salary=3000, startDate=2020-07-27 7:07:32, localDateTime=2015-03-27T10:15:30, supervisor=Mike}
+Employee{id=2, name='Rose', joinDate=2011-05-01 05:30:00.0, salary=4000, startDate=07/27/2020, localDateTime=2018-03-27T10:15:30, supervisor=Diana}
+Employee{id=3, name='Denise', joinDate=2006-01-10 05:30:00.0, salary=1500, startDate=07/27/2019, localDateTime=2017-03-27T10:15:30, supervisor=Diana}
+Employee{id=4, name='Mike', joinDate=2015-08-20 05:30:00.0, salary=2000, startDate=07/27/2018, localDateTime=2016-03-27T10:15:30, supervisor=null}
+Aug 13, 2021 9:33:11 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl stop
+INFO: HHH10001008: Cleaning up connection pool [jdbc:h2:mem:test;DB_CLOSE_DELAY=-1]
+
+package com.logicbig.example;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+
+@Entity
+public class Employee {
+    @Id
+    @GeneratedValue
+    private long id;
+    private String name;
+    private Timestamp joinDate;
+    private long salary;
+    
+    private String startDate;
+    private LocalDateTime localDateTime;
+    
+    @OneToOne
+    private Employee supervisor;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Timestamp getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Timestamp joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    public long getSalary() {
+        return salary;
+    }
+
+    public void setSalary(long salary) {
+        this.salary = salary;
+    }
+
+    public Employee getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(Employee supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public static Employee create(String name, int salary, LocalDate joinDate, String startDate, LocalDateTime localDateTime) {
+		/*
+		 * String time = "2019-03-27T10:15:30"; LocalDateTime localTimeObj =
+		 * LocalDateTime.parse(time); DateTimeFormatter formatter1 =
+		 * DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		 */
+        Employee employee = new Employee();
+        employee.setName(name);
+        employee.setSalary(salary);
+        employee.setJoinDate(Timestamp.from(joinDate.atStartOfDay().toInstant(ZoneOffset.UTC)));
+        employee.setStartDate(startDate);
+        employee.setLocalDateTime(localDateTime);
+        return employee;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", joinDate=" + joinDate +
+                ", salary=" + salary +
+                ", startDate=" + startDate +
+                ", localDateTime=" + localDateTime +
+                ", supervisor=" + (supervisor == null ? "null" : supervisor.name) +
+                '}';
+    }
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getLocalDateTime() {
+		return localDateTime;
+	}
+
+	public void setLocalDateTime(LocalDateTime localDateTime) {
+		this.localDateTime = localDateTime;
+	}
+}
+
+
+package com.logicbig.example;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+public class ExampleMain {
+    private static EntityManagerFactory entityManagerFactory =
+            Persistence.createEntityManagerFactory("example-unit");
+
+    public static void main(String[] args) {
+        try {
+            persistEmployees();
+//            findEmployeeBySalaryRange();
+//            findEmployeeBySalaryRange2();
+            findEmployeeByJoinDate();
+        } finally {
+            entityManagerFactory.close();
+        }
+    }
+
+	/*
+	 * private static void findEmployeeBySalaryRange() {
+	 * System.out.println("-- Employee with salary BETWEEN 2000 and 4000 --");
+	 * EntityManager em = entityManagerFactory.createEntityManager();
+	 * CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+	 * CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+	 * Root<Employee> employee = query.from(Employee.class); query.select(employee)
+	 * // .where(criteriaBuilder.between(employee.get(Employee_.salary), 2000L,
+	 * 4000L)); .where(criteriaBuilder.between(employee.get("salary"), 2000L,
+	 * 4000L)); List<Employee> resultList = em.createQuery(query).getResultList();
+	 * resultList.forEach(System.out::println); em.close(); }
+	 */
+
+	/*
+	 * private static void findEmployeeBySalaryRange2() { System.out.
+	 * println("-- Employee with salary BETWEEN supervisor's salary and 4000 --");
+	 * EntityManager em = entityManagerFactory.createEntityManager();
+	 * CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+	 * CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+	 * Root<Employee> employee = query.from(Employee.class); Join<Employee,
+	 * Employee> supervisor = employee.join(Employee_.supervisor);
+	 * query.select(employee)
+	 * .where(criteriaBuilder.between(employee.get(Employee_.salary),
+	 * supervisor.get(Employee_.salary), criteriaBuilder.literal(4000L)));
+	 * List<Employee> resultList = em.createQuery(query).getResultList();
+	 * resultList.forEach(System.out::println); em.close(); }
+	 */
+
+    private static void findEmployeeByJoinDate() {
+    	
+    	String time = "2019-03-27T10:15:30";
+        LocalDateTime localTimeObj = LocalDateTime.parse(time);
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        
+        System.out.println("-- Employee with join date BETWEEN '1990-01-01' and '2010-05-01' --");
+        EntityManager em = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> employee = query.from(Employee.class);
+        query.select(employee)
+//             .where(criteriaBuilder.between(employee.get(Employee_.joinDate),
+        .where(criteriaBuilder.between(employee.get("joinDate"),
+        			
+			localToTimeStamp(LocalDate.of(1990, 01, 01)),
+			localToTimeStamp(LocalDate.of(2010, 05, 01)))
+        		
+        	)
+						 
+        			
+
+//             .orderBy(criteriaBuilder.desc(employee.get(Employee_.joinDate)));
+        .orderBy(criteriaBuilder.desc(employee.get("joinDate")));
+        
+        List<Employee> resultList = em.createQuery(query).getResultList();
+        resultList.forEach(System.out::println);
+        em.close();
+    }
+    
+    
+
+    private static Timestamp localToTimeStamp(LocalDate date) {
+        return Timestamp.from(date.atStartOfDay().toInstant(ZoneOffset.UTC));
+    }
+
+    public static void persistEmployees() {
+    	
+    	String time = "2019-03-27T10:15:30";
+        LocalDateTime localTimeObj = LocalDateTime.parse(time);
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        
+        Employee employee1 = Employee.create("Diana", 3000, LocalDate.of(1999, 11, 15), "2020-07-27 7:07:32", localTimeObj.minusYears(4));
+        Employee employee2 = Employee.create("Rose", 4000, LocalDate.of(2011, 5, 1), "07/27/2020",  localTimeObj.minusYears(1));
+        Employee employee3 = Employee.create("Denise", 1500, LocalDate.of(2006, 1, 10), "07/27/2019",  localTimeObj.minusYears(2));
+        Employee employee4 = Employee.create("Mike", 2000, LocalDate.of(2015, 8, 20), "07/27/2018",  localTimeObj.minusYears(3));
+        employee1.setSupervisor(employee4);
+        employee2.setSupervisor(employee1);
+        employee3.setSupervisor(employee1);
+        employee4.setSupervisor(null);
+
+
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(employee1);
+        em.persist(employee2);
+        em.persist(employee3);
+        em.persist(employee4);
+        em.getTransaction().commit();
+        em.close();
+        System.out.println("-- employee persisted --");
+        System.out.println(employee1);
+        System.out.println(employee2);
+        System.out.println(employee3);
+        System.out.println(employee4);
+    }
+}
+	    
+	   
