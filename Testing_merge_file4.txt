@@ -860,5 +860,36 @@ public class ExampleMain {
         System.out.println(employee4);
     }
 }
-	    
+
+
+
+-----------------------------------------------------------------------------------------------
+
+https://docs.gradle.org/current/userguide/upgrading_version_6.html
+
+https://www.jetbrains.com/idea/guide/tutorials/working-with-gradle/shortcuts-used/
+
+
+https://www.jetbrains.com/idea/guide/tutorials/working-with-gradle/
+
+https://www.jetbrains.com/help/idea/gradle-settings.html
+https://www.jetbrains.com/idea/guide/tutorials/working-with-gradle/syncing-and-reloading/
+https://www.jetbrains.com/idea/guide/tutorials/working-with-gradle/gradle-settings/
+
+https://www.jetbrains.com/idea/guide/tutorials/working-with-gradle/gradle-wrapper/  ******
+		If you update the gradle-wrapper.properties file to have a different version number, IntelliJ IDEA will detect the changes and asks us to reload these changes. 
+		The IDE will download this new version of Gradle, and then rebuild the project using it.
+		
+https://intellij-support.jetbrains.com/hc/en-us/community/posts/360000029630-Please-update-Gradle-plugin-for-latest-  ****
+		For those who land on this page because they are looking for how to update Gradle in IntelliJ.
+This page explains that relatively well:
+https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:upgrading_wrapper
+
+With me (Windows) it was:
+gradlew.bat wrapper --gradle-version 6.6.1
+
+
+https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:upgrading_wrapper
+
+-------------------------------------------------------------------------------------------------------------------------------
 	   
