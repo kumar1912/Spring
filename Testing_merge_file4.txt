@@ -1,3 +1,9 @@
+https://www.baeldung.com/java-switch            **** A switch works only with four primitives and their wrappers, as well as with the enum type and the String class:
+https://www.geeksforgeeks.org/decision-making-javaif-else-switch-break-continue-jump/
+https://devqa.io/java-if-else-switch-statements/
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
 parameter value did not match expected type java.time.localdatetime (n/a)
 
 https://www.titanwolf.org/Network/q/5c86eca8-0d90-4ec9-b3ec-a8012a4c4233/y
