@@ -60,3 +60,193 @@ gradle Pattern: upload<ConfigurationName>: Assembles and uploads the artifacts b
 To see all tasks and more detail, run gradle tasks --all
 
 To see more detail about a task, run gradle help --task <task>
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+29-August-2021
+
+
+
+https://docs.gradle.org/current/userguide/performance.html *******************************
+https://www.vogella.com/tutorials/JUnit/article.html
+
+https://maven.apache.org/surefire/maven-surefire-plugin/examples/fork-options-and-parallel-execution.html
+https://www.baeldung.com/java-memory-leaks
+https://mkyong.com/eclipse/eclipse-java-lang-outofmemoryerror-java-heap-space/
+https://pitest.org/faq/
+		Michal Jedynak maintains an IntelliJ plugin. PIT intellij plugin
+		
+https://stackoverflow.com/questions/52733942/increase-heap-memory-for-gradle-test
+
+			test{
+...
+  minHeapSize = "128m"
+  maxHeapSize = "512m"
+}
+
+
+
+https://stackoverflow.com/questions/44701947/run-application-via-gradlew-with-xmx-and-xms*************************
+https://itnext.io/running-jenkins-builds-in-containers-458e90ff2a7b  *******************
+
+
+https://stackoverflow.com/questions/7434301/junit-test-runs-out-of-memory-how-to-increase-heap-size         ************
+Edit your project.properties file and add the line:
+
+test.run.args=-Xms128m -Xmx1400m
+
+
+You can also increase the max size for all VMs by setting this environment variable for your OS:
+
+ _JAVA_OPTIONS=-Xmx300m
+ 
+
+https://discuss.gradle.org/t/how-to-decrease-gradle-junitrunner-memory-consumptions/2170/6
+			Runing with: gradle test --debug -DGRADLE_OPTS=-Xmx4076m-XX:-UseGCOverheadLimit
+			
+https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html         ***************************************
+
+// set heap size for the test JVM(s)
+  minHeapSize = "128m"
+  maxHeapSize = "512m"
+
+  // set JVM arguments for the test JVM(s)
+  jvmArgs '-XX:MaxPermSize=256m'
+			
+https://dzone.com/articles/creating-test-stages-with-junit-5                 **************************************************************
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+https://answers.sap.com/questions/12756195/executing-individual-junit-test-case-in-eclipse--o.html
+
+Vote up
+2
+Vote down
+author's profile photo Former Member
+Former Member
+Nov 09, 2015 at 01:40 PM
+Junit tests are run in a different vm as the Ee IDE. So it is that vm that is out of memory and not the Ee one. You can change the settings of the test vm in the run configurations of the test. You go to the run configurations and then under arguments, you can set the vm arguments.
+
+-Xms - Set initial Java heap size -Xmx - Set maximum Java heap size
+
+Former Member
+Nov 09, 2015 at 02:03 PM
+On Ee menu, clicks Run -> Run Configurations.., select the Java application you want to run, clicks on the Arguments tab, update the VM arguments with the following options
+
+For example, -Xms512M -Xmx1024M or more depends on your pc.
+
+Like 0
+
+Share
+Alert moderator
+Add a Comment
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+https://stackoverflow.com/questions/7434301/junit-test-runs-out-of-memory-how-to-increase-heap-size
+
+
+
+JUnit test runs out of memory — how to increase heap size?
+Asked 9 years, 11 months ago
+Active 7 years, 1 month ago
+Viewed 10k times
+
+10
+
+
+1
+I am running a Junit test which throws an exception OutOfMemory. The test is started inside NetBeans 6.9.X. When profiling it I've realized that the Heap maxSize is 64M. I would like to increment this but I couldn't find how to do this.
+
+I already tried right click at the project ->properties ->Run and under the VM options I've set -Xms300M but this didn't work.
+
+Any hint?
+
+Thanks in advance.
+
+
+Try changing/adding the Xms parameter netbeans_default_options in etc/netbeans.conf – Hari Menon Sep 15 '11 at 16:37
+Thanks, already tried and it is not working. It crashes when the heap reaches 64M. I've set this netbeans_default_options = "-J-Xms384m -J-Xmx512m -J-XX:PermSize=32m -J-XX:MaxPermSize=96m -J-Xverify:none -XX:+HeapDumpOnOutOfMemory" – Luixv Sep 15 '11 at 16:42
+Post your stack trace please. – djangofan Sep 16 '11 at 15:28
+
+
+
+
+5 Answers
+
+6
+
+From http://wiki.gephi.org/index.php/NetBeans_Tips#How_to_increase_Heap_Size_for_JUnit_test
+
+Edit your project.properties file and add the line:
+
+test.run.args=-Xms128m -Xmx1400m
+Share
+Improve this answer
+Follow
+answered Sep 15 '11 at 16:42
+
+Roshan
+1,07577 silver badges1111 bronze badges
+Unfortunately that link is broken now. – Wheezil Jan 15 '17 at 20:02
+1
+Here's an archived version of that page: web.archive.org/web/20130314101004/http://wiki.gephi.org/… – Roshan Jan 17 '17 at 20:53 
+Does that still apply to Netbeans 8? Current Netbeans doc has no reference to that file that I could find, and if I put it in the prescribed place, nothing happens, the test still runs with default memory. – Wheezil Jan 19 '17 at 19:37
+Add a comment
+
+4
+
+You can also increase the max size for all VMs by setting this environment variable for your OS:
+
+ _JAVA_OPTIONS=-Xmx300m
+Share
+Improve this answer
+Follow
+answered Sep 15 '11 at 16:43
+
+JRL
+72.9k1717 gold badges9090 silver badges141141 bronze badges
+I didn't know that. Thats cool. So, on windows you could do: SET /P _JAVA_OPTIONS=-Xmx300M ? Awesome. – djangofan Sep 16 '11 at 15:26
+Add a comment
+
+2
+
+Have you adjusted -Xmx as well as -Xms
+
+-Xms300m will force java using no less 300m, and -Xmx300m will let jvm use no more than 300m
+
+Share
+Improve this answer
+Follow
+answered Sep 15 '11 at 16:36
+
+Chengxi Li
+42611 gold badge33 silver badges1414 bronze badges
+Add a comment
+
+1
+
+You can try this and see if it helps:
+
+-XX:MaxPermSize=128m
+Share
+Improve this answer
+Follow
+answered Sep 15 '11 at 16:35
+
+djangofan
+25.9k5555 gold badges175175 silver badges264264 bronze badges
+No. This is not about permgen. He is running out of total heap. – Miserable Variable Sep 15 '11 at 16:48
+No, thats incorrect. He didn't he ran out of heap. He said "OutOfMemory" (in general) and I know that the PermGen argument fixes a certain type of OOME. – djangofan Sep 16 '11 at 15:24 
+True. I am curious though to know why you think this this not a total heap problem but rather specifically permgen problem. – Miserable Variable Sep 16 '11 at 15:35
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
