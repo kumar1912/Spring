@@ -250,3 +250,89 @@ True. I am curious though to know why you think this this not a total heap probl
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+https://alvinalexander.com/java/jwarehouse/spring-framework-2.5.3.shtml
+
+	https://alvinalexander.com/java/jwarehouse/spring-framework-2.5.3/samples/petclinic/test/org/springframework/samples/petclinic/PetClinicSuiteTests.java.shtml
+	https://alvinalexander.com/java/jwarehouse/spring-framework-2.5.3/tiger/test/org/springframework/test/context/junit4/SpringJUnit4SuiteTests.java.shtml
+	
+	
+https://howtodoinjava.com/junit5/junit5-test-suites-examples/
+		https://github.com/lokeshgupta1981/Junit5Examples/tree/master/JUnit5Examples
+
+https://github.com/eugenp/tutorials/search?q=suite   **********************************		
+https://www.baeldung.com/junit-5
+https://www.baeldung.com/junit-filtering-tests
+		https://github.com/eugenp/tutorials/tree/master/testing-modules/junit-5-basics        ****************
+		
+https://kkjavatutorials.com/junit-5-test-suites-examples/ **********
+
+https://junit.org/junit5/docs/snapshot/user-guide/
+For Gradle and Java, check out the junit5-jupiter-starter-gradle project.
+	https://github.com/junit-team/junit5-samples/blob/80fff3cdf13c487449d125d0d0d607535a7be1ca/junit5-jupiter-starter-gradle/build.gradle
+	
+https://javabydeveloper.com/spring-boot-junit-5-test-example/
+
+https://stackoverflow.com/questions/54136880/how-to-run-junit-5-test-in-spring-test-suite       **************
+
+2
+
+Yes. You have to add JUnit5 manually as spring-boot-starter-test by default include JUnit4 only.
+
+First , exclude JUnit4 from spring-boot-starter-test :
+
+    <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <!-- Exclude JUnit 4 -->
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+    </dependency>
+Then include JUnit5 dependencies:
+
+    <!-- Actual Junit5 implementation. Will transitively include junit-jupiter-api -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    <!-- For junit5 parameterised test support -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    <!-- Only required to run junit5 test from IDE -->
+    <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-launcher</artifactId>
+        <scope>test</scope>
+    </dependency>
+	
+https://stackoverflow.com/questions/62168403/junit-5-test-suite-choose-test-methods
+
+test {
+    useJUnitPlatform()
+}
+
+task unitTests(type: Test) {
+    useJUnitPlatform {
+        includeTags 'UnitTest'
+    }
+}
+
+task integrationTests(type: Test) {
+    useJUnitPlatform {
+        includeTags 'IntegrationTest'
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
