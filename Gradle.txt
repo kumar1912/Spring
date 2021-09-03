@@ -339,3 +339,49 @@ task integrationTests(type: Test) {
 
 https://github.com/spring-projects/spring-framework/search?q=suite
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+https://stackoverflow.com/questions/64153725/run-junit-5-test-suite-loading-spring-context
+
+package mypackage.test;
+
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.suite.api.SelectPackages;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+@WebAppConfiguration
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class, classes = {
+        MyRootSpringConfiguration.class })
+@SelectPackages("mypackage.test.units")
+class MyTestSuite {
+
+}
+
+
+
+https://stackoverflow.com/questions/31003176/specifying-classes-loading-order-in-contextconfiguration-in-junit-test-cases
+
+
+
+https://github.com/eugenp/tutorials/blob/950bbadc353bdca114befc98cf4a18476352220e/testing-modules/junit-5-basics/src/test/java/com/baeldung/tags/EmployeeDAOIntegrationTest.java
+https://github.com/eugenp/tutorials/blob/950bbadc353bdca114befc98cf4a18476352220e/testing-modules/junit-5-basics/src/test/java/com/baeldung/tags/EmployeeDAOTestSuite.java
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("com.baeldung.tags")
+@IncludeTags("UnitTest")
+
+https://github.com/eugenp/tutorials/blob/950bbadc353bdca114befc98cf4a18476352220e/testing-modules/junit-5-basics/src/test/java/com/baeldung/suites/AllUnitTest.java
+@RunWith(JUnitPlatform.class)
+@SelectPackages("com.baeldung")
+// @SelectClasses({AssertionTest.class, AssumptionTest.class, ExceptionTest.class})
+public class AllUnitTest {
+
+}
+
