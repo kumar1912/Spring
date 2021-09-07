@@ -385,3 +385,22 @@ public class AllUnitTest {
 
 }
 
+D:\Junit_Test_Sample\junit5-demo-master
+
+https://www.talentica.com/blogs/what-is-new-in-junit-5/
+		https://github.com/arindamnayak/junit5-demo
+
+
+JUnit 5 can't find test units when called from Gradle
+	https://gitmemory.com/issue/junit-team/junit5/2123/563405776
+	
+	https://github.com/gradle/gradle/issues/12073
+	
+	https://testing340.blogspot.com/2015/11/orggradleapiinternaltaskstestingtestsui.html
+	
+	https://discuss.gradle.org/t/junit-5-test-suites-not-running/32977/7***********************************
+	https://www.javacodegeeks.com/2020/04/junit5-testsuite-alternative.html  ************************
+	
+	
+	https://www.thetopsites.net/article/53179735.shtml
+		"No tests were found" when running test class in IntelliJ · Issue , 
