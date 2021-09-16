@@ -408,3 +408,14 @@ JUnit 5 can't find test units when called from Gradle
 	junit-5-migration
 https://www.baeldung.com/junit-5-migration ********************
 https://www.softwaretestinghelp.com/junit-test-suite/      *****
+
+
+https://www.baeldung.com/spring-5-junit-config
+	@SpringJUnitConfig combines these 2 annotations:
+			*************
+
+https://www.jvt.me/posts/2021/06/25/spring-context-test/
+https://gitlab.com/jamietanna/jvt.me/-/commit/9769c9ba3db1f6a2acd41c8cb7ae34a0f166de8d
+
+
+https://temp-mail.org/
