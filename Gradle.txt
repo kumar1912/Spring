@@ -1,3 +1,21 @@
+Step 1: Lets assume I requested at 8AM so the date from UI i get on Service is 21/09/2021 08:00 IST 
+ 
+Step 2: On Java Filter I convert this date to EST by subtracting the offset 
+that is example 12 HRS from the clock 21/09/2021 08:00 IST  - 12 HRS -> 
+the to date on Java layer will become 20/09/2021 20:00 EST  
+
+Step 3: Now for Today on UI of IST it should be anything between 21/09/2021 00:00:00 
+to 21/09/2021 08:00:00  
+So, on Java layer I need to calculate a from date time using the date not time sent 
+by UI  which is 21/09/2021 08:00 IST  not the from datetime will be 21/09/2021 00:00:00 IST 
+and then this 
+will be converted to EST so not the from date will be 20/09/2021 12:00:00 EST 
+
+Step 4: Now the query will have from date as 20/09/2021 12:00:00 and to date as 20/09/2021 20:00:00, note both are EST 
+
+Step 5: Now you  till convert this back to IST so the records will be for 21/09/2021 00:00:00 to 
+21/09/2021 08:00:00 which is all records for 21st  
+
 gradle build
 gradle -i build
 
