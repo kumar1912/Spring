@@ -16,6 +16,14 @@ Step 4: Now the query will have from date as 20/09/2021 12:00:00 and to date as 
 Step 5: Now you  till convert this back to IST so the records will be for 21/09/2021 00:00:00 to 
 21/09/2021 08:00:00 which is all records for 21st  
 
+ui 2021-09-21 7:45 am ---> IST to EST [2021-09-20 20:50]
+
+DB Input 2021-09-20 20:50 --> GTE 2021-09-20 00:00 LTE 2021-09-20 23:59
+
+2021-09-20 1:00 ...........23:59
+
+EST to IST [2021-09-20 08:50] to [2021-09-21 08:50]
+
 gradle build
 gradle -i build
 
