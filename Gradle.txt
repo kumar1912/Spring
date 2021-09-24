@@ -19,6 +19,8 @@ https://tech.asimio.net/2020/11/06/Preventing-N-plus-1-select-problem-using-Spri
 
 https://www.codejava.net/frameworks/spring/jpa-join-query-for-like-search-examples       ************Many to Many
 
+http://www.java2s.com/Tutorials/Java/JPA/4730__JPA_Query_Join_Three_Entities.htm            *****************
+
 -------------------------------------------------------------------------------------------------------------------------
 
 Step 1: Lets assume I requested at 8AM so the date from UI i get on Service is 21/09/2021 08:00 IST 
