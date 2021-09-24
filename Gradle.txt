@@ -1,3 +1,26 @@
+
+https://medium.com/@techkarmo/spring-data-jpa-join-with-unrelated-entities-with-help-of-jpql-in-spring-boot-application-c358e11512bd
+https://stackoverflow.com/questions/54507552/how-to-join-results-of-multiple-tables-in-spring-jpa-repository            ***************
+https://bushansirgur.in/spring-data-jpa-jpql-join-query-with-example/
+
+https://www.javachinna.com/join-unrelated-entities-spring-data-jpa-hibernate/ *****************
+		https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#projections
+        https://thorben-janssen.com/how-to-join-unrelated-entities
+
+		Source Code
+		https://github.com/JavaChinna/spring-jpa-hibernate-join-unrelated-entities
+		
+https://www.objectdb.com/java/jpa/query/jpql/from
+
+https://self-learning-java-tutorial.blogspot.com/2020/08/spring-jpa-specification-to-join-tables.html           ************
+			bySearchQuery
+			
+https://tech.asimio.net/2020/11/06/Preventing-N-plus-1-select-problem-using-Spring-Data-JPA-EntityGraph.html     ***********
+
+https://www.codejava.net/frameworks/spring/jpa-join-query-for-like-search-examples       ************Many to Many
+
+-------------------------------------------------------------------------------------------------------------------------
+
 Step 1: Lets assume I requested at 8AM so the date from UI i get on Service is 21/09/2021 08:00 IST 
  
 Step 2: On Java Filter I convert this date to EST by subtracting the offset 
