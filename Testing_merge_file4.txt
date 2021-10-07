@@ -901,4 +901,24 @@ https://docs.gradle.org/7.0/userguide/upgrading_version_6.html
 https://gradle.org/whats-new/gradle-7/
 
 -------------------------------------------------------------------------------------------------------------------------------
-	   
+AOP
+
+https://www.baeldung.com/spring-aop-annotation
+	https://github.com/eugenp/tutorials/tree/master/spring-aop			***************
+	
+https://www.javaguides.net/2019/05/spring-boot-spring-aop-logging-example-tutorial.html
+https://www.techgeeknext.com/spring-boot/spring-boot-logging-aop-example
+https://howtodoinjava.com/spring-boot2/logging/performance-logging-aspectj-aop/
+
+https://mflash.dev/blog/2020/09/13/logging-methods-with-aspectj-in-a-spring-application/    *************
+https://www.springboottutorial.com/spring-boot-and-aop-with-spring-boot-starter-aop
+
+https://solocoding.dev/blog/eng_spring_centrlize_logging_with_aop         ************************
+			2021-03-20 19:15:04.476  INFO 18689 --- [nio-8080-exec-7] dev.solocoding.aop.log.LoggerComponent   : before @creatPost:[Post(id=null, title=title, body=body)]
+
+			2021-03-20 19:15:04.477 ERROR 18689 --- [nio-8080-exec-7] dev.solocoding.aop.log.LoggerComponent   : Exception during: @creatPost:[Post(id=null, title=title, body=body)] with ex: java.lang.RuntimeException: Wanted Exception
+2
+https://dzone.com/articles/implementing-aop-with-spring-boot-and-aspectj    *****************
+
+
+-------------------------------------------------------------------------------------------------------------------------------
