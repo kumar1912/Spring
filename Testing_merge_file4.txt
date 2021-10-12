@@ -1015,3 +1015,75 @@ https://www.onlyfullstack.com/advance-collectors-in-java-8/
 https://www.onlyfullstack.com/microservices-interview-questions/
 
 -------------------------------------------------------------------------------------------------------------------------------
+
+
+{
+   "@timestamp":"2021-10-12T16:06:01.865+05:30",
+   "@version":"1",
+   "@type":"access",
+   "logger":"%PARSER_ERROR[logger]",
+   "timestamp":"2021-10-12 16:06:01",
+   "agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36",
+   "client-host":"0:0:0:0:0:0:0:1",
+   "clientip":"0:0:0:0:0:0:0:1",
+   "remote-user":"-",
+   "request-message":"GET",
+   "request-url":"GET /favicon.ico HTTP/1.1",
+   "request-uri":"/favicon.ico",
+   "status-code":400,
+   "bytes-sent":null,
+   "elapsed-time":2,
+   "accept":"image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+   "response.content-type":"null",
+   "response.content-length":"null",
+   "response.server":"null",
+   "response.connection":"null",
+   "request.host":"localhost:8082",
+   "request.accept":"image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+   "request.accept-encoding":"gzip, deflate, br",
+   "request.connection":"keep-alive"
+}
+
+<configuration debug="false">
+  <appender name="accessJsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.AccessEventCompositeJsonEncoder">
+      <providers>
+        <timestamp />
+        <pattern>
+          <pattern>
+            {
+            "@version" : "1",
+            "@type" : "access",
+            "logger": "%logger",
+            "timestamp":"%date{yyyy-MM-dd HH:mm:ss}",
+            "agent":"%header{User-agent}",
+            "client-host" : "%clientHost",
+            "clientip":"%remoteIP",
+            "remote-user" : "%user",
+            "request-message" : "%requestMethod",
+            "request-url" : "%requestURL",
+            "request-uri" : "%requestURI",
+            "status-code" : "#asLong{%statusCode}" ,
+            "bytes-sent" : "#asLong{%bytesSent}",
+            "elapsed-time" : "#asLong{%elapsedTime}",
+            "accept": "%i{Accept}",
+            
+            "response.content-type":"%responseHeader{Content-Type}",
+            "response.content-length":"%responseHeader{Content-Length}",
+            "response.server":"%responseHeader{Server}",
+            "response.connection":"%responseHeader{Connection}",
+             
+			"request.host":"%header{Host}",
+            "request.accept":"%header{Accept}",
+            "request.accept-encoding":"%header{Accept-Encoding}",
+            "request.connection":"%header{Connection}"
+            }
+          </pattern>
+        </pattern>
+      </providers>
+    </encoder>
+  </appender>
+  ​
+  <appender-ref ref="accessJsonConsoleAppender" />
+  ​
+</configuration>
