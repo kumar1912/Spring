@@ -956,18 +956,24 @@ https://github.com/logstash/logstash-logback-encoder       *********************
         <timestamp />
         <pattern>
           <pattern>
-            [
-                .............................
-            "user-agent" : "%User-Agent"
-            ]
+            {
+            "client-host" : "%clientHost",
+            "remote-user" : "%user",
+            "request-message" : "%requestMethod",
+            "request-url" : "%requestURL",
+            "request-uri" : "%requestURI",
+            "user_agent": "%i{User-Agent}",
+            "status-code" : "#asLong{%statusCode}" ,
+            "bytes-sent" : "#asLong{%bytesSent}",
+            "elapsed-time" : "#asLong{%elapsedTime}",
+            "message" : "%requestURL %statusCode"
+            }
           </pattern>
         </pattern>
       </providers>
     </encoder>
   </appender>
-  ​
   <appender-ref ref="accessJsonConsoleAppender" />
-  ​
 </configuration>
 
 
