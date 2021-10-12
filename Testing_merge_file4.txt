@@ -915,6 +915,91 @@ https://www.springboottutorial.com/spring-boot-and-aop-with-spring-boot-starter-
 
 https://solocoding.dev/blog/eng_spring_centrlize_logging_with_aop         ************************
 			2021-03-20 19:15:04.476  INFO 18689 --- [nio-8080-exec-7] dev.solocoding.aop.log.LoggerComponent   : before @creatPost:[Post(id=null, title=title, body=body)]
+			
+			
+
+https://reflectoring.io/structured-logging/
+https://reflectoring.io/springboot-logging/
+https://stegard.net/2021/02/spring-boot-http-access-logging-in-three-steps/
+		https://github.com/jochenchrist/spring-boot-access-logs-demo
+		
+https://springframework.guru/using-logback-spring-boot/
+		<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml">
+    <springprofile name="dev,staging">
+	
+http://logback.qos.ch/manual/layouts.html
+		%logger{5}	mainPackage.sub.sample.Bar	m.s.s.Bar
+		
+		%ex{2}	
+mainPackage.foo.bar.TestException: Houston we have a problem
+  at mainPackage.foo.bar.TestThrower.fire(TestThrower.java:22)
+  at mainPackage.foo.bar.TestThrower.readyToLaunch(TestThrower.java:17)
+
+  
+  http://logback.qos.ch/accessLogJetty.html
+  
+  
+  https://httpd.apache.org/docs/2.4/mod/mod_log_config.html
+		NCSA extended/combined log format
+"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\""
+
+
+
+https://github.com/logstash/logstash-logback-encoder       **************************
+ 
+
+<configuration debug="false">
+  <appender name="accessJsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.AccessEventCompositeJsonEncoder">
+      <providers>
+        <timestamp />
+        <pattern>
+          <pattern>
+            [
+                .............................
+            "user-agent" : "%User-Agent"
+            ]
+          </pattern>
+        </pattern>
+      </providers>
+    </encoder>
+  </appender>
+  ​
+  <appender-ref ref="accessJsonConsoleAppender" />
+  ​
+</configuration>
+
+
+Omkar
+-----
+
+https://springframework.guru/using-logback-spring-boot/
+https://springframework.guru/logback-enterprise-logging-framework-2/
+https://springframework.guru/using-logback-spring-boot/
+https://springframework.guru/logback-configuration-using-xml/
+
+
+https://mkyong.com/spring-boot/spring-boot-slf4j-logging-example/
+
+https://javadeveloperzone.com/spring-boot/spring-boot-slf4j-and-logback-example/       ********************
+https://www.java2novice.com/spring-boot/logback-slf4j-logging/ *************************
+
+<if condition='property("spring.profiles.active").contains("dev")'>
+        <then>
+            <logger name="guru.springframework.helpers" level="DEBUG" additivity="false">
+                <appender-ref ref="CONSOLE" />
+            </logger>
+        </then>
+        <else>
+            <logger name="guru.springframework.helpers" level="WARN" additivity="false">
+                <appender-ref ref="FILE" />
+            </logger>
+        </else>
+    </if>
+	
+	https://www.baeldung.com/logback           ******
+https://springframework.guru/logback-configuration-using-xml/
 
 			2021-03-20 19:15:04.477 ERROR 18689 --- [nio-8080-exec-7] dev.solocoding.aop.log.LoggerComponent   : Exception during: @creatPost:[Post(id=null, title=title, body=body)] with ex: java.lang.RuntimeException: Wanted Exception
 2
