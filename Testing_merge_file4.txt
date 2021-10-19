@@ -1087,3 +1087,692 @@ https://www.onlyfullstack.com/microservices-interview-questions/
   <appender-ref ref="accessJsonConsoleAppender" />
   ​
 </configuration>
+
+
+======================================================================================================================================================================
+
+https://stackoverflow.com/questions/15159610/update-elements-in-a-jsonobject
+
+
+The example below was pretty much lifted from mkyongs tutorial. Instead of saving to a file you can just use the String json as a json representation of your POJO.
+
+import java.io.FileWriter;
+import java.io.IOException;
+import com.google.gson.Gson;
+
+public class GsonExample {
+    public static void main(String[] args) {
+
+        YourObject obj = new YourOBject();
+        Gson gson = new Gson();
+        String json = gson.toJson(obj); //convert 
+        System.out.println(json);
+
+    }
+}
+
+
+Here is an easy way to convert Java object to JSON Object (not Json String)
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.parser.JSONParser;
+            
+JSONObject jsonObject = (JSONObject) JSONValue.parse(new ObjectMapper().writeValueAsString(JavaObject));
+Share
+Improve this answer
+Follow
+answered Sep 28 at 13:02
+
+
+4 Answers
+
+24
+
+If we are parsing all model classes of server in GSON format then this is a best way to convert java object to JSONObject.In below code SampleObject is a java object which gets converted to the JSONObject.
+
+SampleObject mSampleObject = new SampleObject();
+String jsonInString = new Gson().toJson(mSampleObject);
+JSONObject mJSONObject = new JSONObject(jsonInString);
+
+
+How to convert a Java Object to a JSONObject?
+Asked 7 years, 4 months ago
+Active 20 days ago
+Viewed 97k times
+
+Report this ad
+
+20
+
+
+i need to convert a POJO to a JSONObject (org.json.JSONObject)
+
+I know how to convert it to a file:
+
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+        mapper.writeValue(new File(file.toString()), registrationData);
+    } catch (JsonGenerationException e) {
+        e.printStackTrace();
+    } catch (JsonMappingException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+But I dont want a file this time.
+
+
+
+==================================================================================================================================================================================================================================================================
+
+
+https://stackoverflow.com/questions/15159610/update-elements-in-a-jsonobject
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+64
+
+
+15
+Lets say I gave a JSONObject
+
+{
+ "person":{"name":"Sam", "surname":"ngonma"},
+ "car":{"make":"toyota", "model":"yaris"}
+ }
+How do I update some of the values in the JSONObject?
+
+Like below :
+
+String name = jsonArray.getJSONObject(0).getJSONObject("person").getString("name");
+name = "Sammie";
+
+-----------------------------------------------------------------------------------------------------
+
+5 Answers
+
+121
+
+Use the put method: https://developer.android.com/reference/org/json/JSONObject.html
+
+JSONObject person =  jsonArray.getJSONObject(0).getJSONObject("person");
+person.put("name", "Sammie");
+
+-------------------------------------------------------------------------------------
+
+34
+
+Remove key and then add again the modified key, value pair as shown below :
+
+    JSONObject js = new JSONObject();
+    js.put("name", "rai");
+
+    js.remove("name");
+    js.put("name", "abc");
+I haven't used your example; but conceptually its same.
+
+___________________________________________________________________________________________
+
+
+6
+
+Hello I can suggest you universal method. use recursion.
+
+    public static JSONObject function(JSONObject obj, String keyMain,String valueMain, String newValue) throws Exception {
+    // We need to know keys of Jsonobject
+    JSONObject json = new JSONObject()
+    Iterator iterator = obj.keys();
+    String key = null;
+    while (iterator.hasNext()) {
+        key = (String) iterator.next();
+        // if object is just string we change value in key
+        if ((obj.optJSONArray(key)==null) && (obj.optJSONObject(key)==null)) {
+            if ((key.equals(keyMain)) && (obj.get(key).toString().equals(valueMain))) {
+                // put new value
+                obj.put(key, newValue);
+                return obj;
+            }
+        }
+
+        // if it's jsonobject
+        if (obj.optJSONObject(key) != null) {
+            function(obj.getJSONObject(key), keyMain, valueMain, newValue);
+        }
+
+        // if it's jsonarray
+        if (obj.optJSONArray(key) != null) {
+            JSONArray jArray = obj.getJSONArray(key);
+            for (int i=0;i<jArray.length();i++) {
+                    function(jArray.getJSONObject(i), keyMain, valueMain, newValue);
+            }
+        }
+    }
+    return obj;
+}
+
+-------------------------------------------------------------------------------------------------------
+
+1
+
+Generic way to update the any JSONObjet with new values.
+
+private static void updateJsonValues(JsonObject jsonObj) {
+    for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+        JsonElement element = entry.getValue();
+        if (element.isJsonArray()) {
+            parseJsonArray(element.getAsJsonArray());
+        } else if (element.isJsonObject()) {
+            updateJsonValues(element.getAsJsonObject());
+        } else if (element.isJsonPrimitive()) {
+            jsonObj.addProperty(entry.getKey(), "<provide new value>");
+        }
+
+    }
+}
+
+private static void parseJsonArray(JsonArray asJsonArray) {
+    for (int index = 0; index < asJsonArray.size(); index++) {
+        JsonElement element = asJsonArray.get(index);
+        if (element.isJsonArray()) {
+            parseJsonArray(element.getAsJsonArray());
+        } else if (element.isJsonObject()) {
+            updateJsonValues(element.getAsJsonObject());
+        }
+
+    }
+}
+
+
+--------------------------------------------------------------------------------------------------
+
+
+public static JSONObject updateJson(JSONObject obj, String keyString, String newValue) throws Exception {
+            JSONObject json = new JSONObject();
+            // get the keys of json object
+            Iterator iterator = obj.keys();
+            String key = null;
+            while (iterator.hasNext()) {
+                key = (String) iterator.next();
+                // if the key is a string, then update the value
+                if ((obj.optJSONArray(key) == null) && (obj.optJSONObject(key) == null)) {
+                    if ((key.equals(keyString))) {
+                        // put new value
+                        obj.put(key, newValue);
+                        return obj;
+                    }
+                }
+
+                // if it's jsonobject
+                if (obj.optJSONObject(key) != null) {
+                    updateJson(obj.getJSONObject(key), keyString, newValue);
+                }
+
+                // if it's jsonarray
+                if (obj.optJSONArray(key) != null) {
+                    JSONArray jArray = obj.getJSONArray(key);
+                    for (int i = 0; i < jArray.length(); i++) {
+                        updateJson(jArray.getJSONObject(i), keyString, newValue);
+                    }
+                }
+            }
+            return obj;
+        }
+		
+		
+==================================================================================================================================================================================================================================================================
+		
+		
+		package com.frandorado.loggingrequestresponsewithbody.service;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import lombok.extern.java.Log;
+
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.jasypt.util.text.StrongTextEncryptor;
+import org.springframework.stereotype.Component;
+
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+//@Log
+@Slf4j
+public class LoggingServiceImpl implements LoggingService {
+    
+    @Override
+    public void logRequest(HttpServletRequest httpServletRequest, Object body) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Map<String, String> parameters = buildParametersMap(httpServletRequest);
+        
+        stringBuilder.append("REQUEST ");
+        stringBuilder.append("method=[").append(httpServletRequest.getMethod()).append("] ");
+        stringBuilder.append("path=[").append(httpServletRequest.getRequestURI()).append("] ");
+        stringBuilder.append("headers=[").append(buildHeadersMap(httpServletRequest)).append("] ");
+        
+        if (!parameters.isEmpty()) {
+            stringBuilder.append("parameters=[").append(parameters).append("] ");
+        }
+        
+        if (body != null) {
+            stringBuilder.append("body=[" + body + "]");
+        }
+        
+        log.info(stringBuilder.toString());
+    }
+    
+    @Override
+    public void logResponse(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object body) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String[] maskDataList = { "propertyAddress", "creditCard", "creditCardExpiry", "socialSecurityNumber" };
+        String[] encryptDataList = { "name", "type","street","city" };
+        stringBuilder.append("RESPONSE ");
+        stringBuilder.append("method=[").append(httpServletRequest.getMethod()).append("] ");
+        stringBuilder.append("path=[").append(httpServletRequest.getRequestURI()).append("] ");
+        stringBuilder.append("responseHeaders=[").append(buildHeadersMap(httpServletResponse)).append("] ");
+//        stringBuilder.append("responseBody=[").append(body.).append("] ");
+        //log.info("body.getClass().getSimpleName() : " + body.getClass().getDeclaredFields());
+        log.info("body.getClass().getSimpleName() : " + body.getClass().getSimpleName());
+        for (Field field : body.getClass().getDeclaredFields()) {
+            field.setAccessible(true); // You might want to set modifier to public first.
+            Object value;
+            Class<?> c = field.getType();
+            System.out.println("getType()=" + field.getType() + " :  field.getName() : "+ field.getName() + " : c.getSimpleName() :"+ c.getSimpleName());
+    		if (c.getSimpleName().equals("List")) {
+    			System.out.println("c.isArray()=" + c.getSimpleName());
+    			System.out.println("field.getType().arrayType().descriptorString()=" + field.getType().arrayType().descriptorString());
+    			System.out.println("c.isArray()=2 " + field.getType().arrayType().getName());
+    			System.out.println("c.isArray()=1 " + field.getType().arrayType().componentType().getFields());
+    		}
+			try {
+				value = field.get(body);
+				if (value != null && Arrays.asList(maskDataList).contains(field.getName())) {
+	                //System.out.println(field.getName() + "=" + value);
+					field.set(body, replaceDigits((String) field.get(body)));
+	                log.info(field.getName() + "=" + value);
+	                
+					/*
+					 * if ("creditCard".equals(field.getName())) { field.setName() }
+					 */
+	            }
+				
+				if (value != null && Arrays.asList(encryptDataList).contains(field.getName())) {
+	                //System.out.println(field.getName() + "=" + value);
+					field.set(body, logValueEncryptionUsingJASYPT((String) field.get(body)));
+	                log.info(field.getName() + "=" + value);
+	                
+					/*
+					 * if ("creditCard".equals(field.getName())) { field.setName() }
+					 */
+	            }
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+        } 
+        log.info("body.toString() : " + body.toString());
+        
+		/*
+		 * for(int i = 0; i<body.names().length(); i++){ Log.v(TAG, "key = " +
+		 * jobject.names().getString(i) + " value = " +
+		 * jobject.get(jobject.names().getString(i))); }
+		 */        
+        stringBuilder.append("responseBody=[").append(body).append("] ");
+        
+        log.info(stringBuilder.toString());
+    }
+    
+    
+    private String replaceDigits(String text) {
+        StringBuffer buffer = new StringBuffer(text.length());
+        Pattern pattern = Pattern.compile("\\d");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            matcher.appendReplacement(buffer, "X");
+        }
+        return buffer.toString();
+    }
+    
+    private String logValueEncryptionUsingJASYPT(String value) {
+    	 System.out.println("Original Value : "+value);
+    	 String mpCryptoPassword = "BornToFight";
+         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+         encryptor.setPassword(mpCryptoPassword);
+         String encryptedPassword = encryptor.encrypt(value);
+         System.out.println(encryptedPassword);
+
+         StandardPBEStringEncryptor decryptor = new StandardPBEStringEncryptor();
+         decryptor.setPassword(mpCryptoPassword);
+         System.out.println(decryptor.decrypt(encryptedPassword));
+         
+         return encryptedPassword;
+    }
+    private Map<String, String> buildParametersMap(HttpServletRequest httpServletRequest) {
+        Map<String, String> resultMap = new HashMap<>();
+        Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+        
+        while (parameterNames.hasMoreElements()) {
+            String key = parameterNames.nextElement();
+            String value = httpServletRequest.getParameter(key);
+            resultMap.put(key, value);
+        }
+        return resultMap;
+    }
+    
+    private Map<String, String> buildHeadersMap(HttpServletRequest request) {
+        Map<String, String> map = new HashMap<>();
+        
+        Enumeration headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = (String) headerNames.nextElement();
+            String value = request.getHeader(key);
+            map.put(key, value);
+        }
+        
+        return map;
+    }
+    
+    private Map<String, String> buildHeadersMap(HttpServletResponse response) {
+        Map<String, String> map = new HashMap<>();
+        
+        Collection<String> headerNames = response.getHeaderNames();
+        for (String header : headerNames) {
+            map.put(header, response.getHeader(header));
+        }
+        
+        return map;
+    }
+    
+    
+}
+
+----------------------------------------------------------------------
+
+<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+			<version>1.9.0</version>
+		</dependency>
+		
+		
+		-----------------------------------------------------------------------
+		
+		
+		
+		https://stackoverflow.com/questions/18014698/how-to-mask-a-value-in-java
+		
+		
+		public class Test {
+    public static void main(String[] args) {
+        String number = "1234";
+        StringBuffer maskValue = new StringBuffer();
+        if(number != null && number.length() >0){
+            for (int i = 0; i < number.length(); i++) {
+                maskValue.append("*");
+            }
+        }
+        System.out.println("Masked Value of 1234 is "+maskValue);
+    }
+}
+Ans - Masked Value of 1234 is ****
+
+
+Two ways (this will mask all charecters not only numbers) :
+
+private String mask(String value) {
+    StringBuilder sb = new StringBuilder();
+    for(int i = 0; i < value.length(); sb.append("*"), i++); 
+    return sb.toString();
+}
+or:
+
+private String mask(String value) {
+    return value.replaceAll(".", "*");
+}
+I use the second one
+
+
+
+==================================================================================================================================================================================================================================================
+
+
+Masking Log
+
+https://www.baeldung.com/custom-logback-appender
+https://github.com/eugenp/tutorials/blob/master/logging-modules/logback/src/main/resources/logback.xml
+				<appender name="mask" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.baeldung.logback.MaskingPatternLayout">
+                <maskPattern>\"SSN\"\s*:\s*\"(.*?)\"</maskPattern> <!-- SSN JSON pattern -->
+                <maskPattern>\"address\"\s*:\s*\"(.*?)\"</maskPattern> <!-- Address JSON pattern -->
+                <maskPattern>(\d+\.\d+\.\d+\.\d+)</maskPattern> <!-- Ip address IPv4 pattern -->
+                <maskPattern>(\w+@\w+\.\w+)</maskPattern> <!-- Email pattern -->
+                <pattern>%-5p [%d{ISO8601,UTC}] [%thread] %c: %m%n%rootException</pattern>
+            </layout>
+        </encoder>
+    </appender>
+	
+https://cloud.spring.io/spring-cloud-sleuth/1.2.x/multi/multi__introduction.html            
+
+https://www.programcreek.com/java-api-examples/?api=net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder   Test Case Written
+
+
+https://gist.github.com/int128/e47217bebdb4c402b2ffa7cc199307ba
+		httpServletResponse.setHeader("RequestId", "1234455"); --> UUID random, you can use.
+    filterChain.doFilter(request, response);
+	
+	
+https://dzone.com/articles/solving-your-logging-problems-with-logback
+		Conditional Processing of Configuration Files
+Logback supports <if>, <then>, <else> elements which control	
+		<property scope="context" resource="application.properties" />
+<if condition='property("env").equals("dev")'>
+    <then>
+        <root level="TRACE">
+            <appender-ref ref="STDOUT" />
+        </root>
+    </then>
+</if>
+
+
+
+https://stackoverflow.com/questions/2989560/how-to-get-the-fields-in-an-object-via-reflection
+
+Object someObject = getItSomehow();
+for (Field field : someObject.getClass().getDeclaredFields()) {
+    field.setAccessible(true); // You might want to set modifier to public first.
+    Object value = field.get(someObject); 
+    if (value != null) {
+        System.out.println(field.getName() + "=" + value);
+    }
+}
+
+
+
+https://roytuts.com/how-to-mask-a-field-or-an-attribute-in-java/             **************** Masking
+
+https://stackoverflow.com/questions/18014698/how-to-mask-a-value-in-java
+
+
+https://stackoverflow.com/questions/22067552/decrypt-using-jasypt
+https://stackoverflow.com/questions/22067552/decrypt-using-jasypt               **************** mpCryptoPassword
+										http://www.jasypt.org/index.html
+		public class EncryptionDecryptionUsingJASYPT {
+
+    private static String mpCryptoPassword = "BornToFight";
+
+    public static void main(String[] args) {
+        String value = "Original Text: Eclipse";
+
+        System.out.println("Original Value : "+value);
+        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+		
+		
+https://github.com/eugenp/tutorials/blob/master/libraries-security/src/main/java/com/baeldung/digitalsignature/level1/DigitalSignatureWithMessageDigestAndCipherSigning.java     *********** level 1, level 2
+
+
+https://github.com/eugenp/tutorials/tree/master/libraries-security/src/main/java/com/baeldung             *****************
+
+bouncycastle
+digitalsignature
+pem
+scribejava
+ssh
+ 
+ 
+ Relevant Articles:
+Guide to ScribeJavax
+Guide to Passay
+Guide to Google Tink
+Introduction to BouncyCastle with Java
+Intro to Jasypt
+Digital Signatures in Java
+How to Read PEM File to Get Public and Private Keys
+SSH Connection With Java
+
+
+
+https://www.tabnine.com/code/java/methods/org.jasypt.encryption.pbe.PooledPBEStringEncryptor/encrypt             ***************
+
+MarkedStringEncryptor.encrypt(...)
+public String encrypt(String message) {
+  logger.debug("encrypting: " + message);
+  if (SecurityUtil.isMarkedEncrypted(message)) {
+    logger.error("the following data is already encrypted: '" + message + "'");
+    return message;
+  }
+  return SecurityUtil.mark(this.encryptor.encrypt(message));
+}
+
+
+====================================================================================================================================================================================================================
+
+Masking Log
+
+https://www.baeldung.com/custom-logback-appender
+https://github.com/eugenp/tutorials/blob/master/logging-modules/logback/src/main/resources/logback.xml
+				<appender name="mask" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.baeldung.logback.MaskingPatternLayout">
+                <maskPattern>\"SSN\"\s*:\s*\"(.*?)\"</maskPattern> <!-- SSN JSON pattern -->
+                <maskPattern>\"address\"\s*:\s*\"(.*?)\"</maskPattern> <!-- Address JSON pattern -->
+                <maskPattern>(\d+\.\d+\.\d+\.\d+)</maskPattern> <!-- Ip address IPv4 pattern -->
+                <maskPattern>(\w+@\w+\.\w+)</maskPattern> <!-- Email pattern -->
+                <pattern>%-5p [%d{ISO8601,UTC}] [%thread] %c: %m%n%rootException</pattern>
+            </layout>
+        </encoder>
+    </appender>
+	
+https://cloud.spring.io/spring-cloud-sleuth/1.2.x/multi/multi__introduction.html            
+
+https://www.programcreek.com/java-api-examples/?api=net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder   Test Case Written
+
+
+https://gist.github.com/int128/e47217bebdb4c402b2ffa7cc199307ba
+		httpServletResponse.setHeader("RequestId", "1234455"); --> UUID random, you can use.
+    filterChain.doFilter(request, response);
+	
+	
+https://dzone.com/articles/solving-your-logging-problems-with-logback
+		Conditional Processing of Configuration Files
+Logback supports <if>, <then>, <else> elements which control	
+		<property scope="context" resource="application.properties" />
+<if condition='property("env").equals("dev")'>
+    <then>
+        <root level="TRACE">
+            <appender-ref ref="STDOUT" />
+        </root>
+    </then>
+</if>
+
+
+
+https://stackoverflow.com/questions/2989560/how-to-get-the-fields-in-an-object-via-reflection
+
+Object someObject = getItSomehow();
+for (Field field : someObject.getClass().getDeclaredFields()) {
+    field.setAccessible(true); // You might want to set modifier to public first.
+    Object value = field.get(someObject); 
+    if (value != null) {
+        System.out.println(field.getName() + "=" + value);
+    }
+}
+
+
+
+https://roytuts.com/how-to-mask-a-field-or-an-attribute-in-java/             **************** Masking
+
+https://stackoverflow.com/questions/18014698/how-to-mask-a-value-in-java
+
+
+https://stackoverflow.com/questions/22067552/decrypt-using-jasypt
+https://stackoverflow.com/questions/22067552/decrypt-using-jasypt               **************** mpCryptoPassword
+										http://www.jasypt.org/index.html
+		public class EncryptionDecryptionUsingJASYPT {
+
+    private static String mpCryptoPassword = "BornToFight";
+
+    public static void main(String[] args) {
+        String value = "Original Text: Eclipse";
+
+        System.out.println("Original Value : "+value);
+        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+		
+		
+https://github.com/eugenp/tutorials/blob/master/libraries-security/src/main/java/com/baeldung/digitalsignature/level1/DigitalSignatureWithMessageDigestAndCipherSigning.java     *********** level 1, level 2
+
+
+https://github.com/eugenp/tutorials/tree/master/libraries-security/src/main/java/com/baeldung             *****************
+
+bouncycastle
+digitalsignature
+pem
+scribejava
+ssh
+ 
+ 
+ Relevant Articles:
+Guide to ScribeJavax
+Guide to Passay
+Guide to Google Tink
+Introduction to BouncyCastle with Java
+Intro to Jasypt
+Digital Signatures in Java
+How to Read PEM File to Get Public and Private Keys
+SSH Connection With Java
+
+
+
+https://www.tabnine.com/code/java/methods/org.jasypt.encryption.pbe.PooledPBEStringEncryptor/encrypt             ***************
+
+MarkedStringEncryptor.encrypt(...)
+public String encrypt(String message) {
+  logger.debug("encrypting: " + message);
+  if (SecurityUtil.isMarkedEncrypted(message)) {
+    logger.error("the following data is already encrypted: '" + message + "'");
+    return message;
+  }
+  return SecurityUtil.mark(this.encryptor.encrypt(message));
+}
+
+
+==================================================================================================================================================================================================================================================================
