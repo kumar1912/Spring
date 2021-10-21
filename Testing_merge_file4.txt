@@ -2040,3 +2040,22 @@ Aapplication property
 #arrayOfStringsMasking=name,type,street,city
 arrayOfStringsMasking=propertyAddress,creditCard,creditCardExpiry,socialSecurityNumber
 arrayOfStringsEncryption="name,type,street,city
+
+
+----------------------------------------------------
+
+
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+			<version>1.9.0</version>
+		</dependency>
+
+
+
