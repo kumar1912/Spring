@@ -1776,3 +1776,267 @@ public String encrypt(String message) {
 
 
 ==================================================================================================================================================================================================================================================================
+
+
+package com.frandorado.loggingrequestresponsewithbody.service;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+//@Log
+@Slf4j
+public class LoggingServiceImpl implements LoggingService {
+
+	/*
+	 @Value("#{${arrayOfStringsEncryption}}") 
+	 private List<String> encryptDataList;
+
+	 @Value("${arrayOfStringsEncryption}")
+	private List<String> encryptDataList;
+
+	 @Value("#{${arrayOfStringsMasking}}") 
+	 private List<String> maskDataList;
+	 */
+/*
+	@Value("${arrayOfStringsEncryption}")
+	private List<String> encryptDataList;
+	@Value("${arrayOfStringsMasking}")
+	private List<String> maskDataList;
+	*/
+	
+	@Value("${arrayOfStringsEncryption}")
+	private String[] encryptDataList;
+	@Value("${arrayOfStringsMasking}")
+	private String[] maskDataList;
+
+	@Override
+	public void logRequest(HttpServletRequest httpServletRequest, Object body) {
+		StringBuilder stringBuilder = new StringBuilder();
+		Map<String, String> parameters = buildParametersMap(httpServletRequest);
+
+		stringBuilder.append("REQUEST ");
+		stringBuilder.append("method=[").append(httpServletRequest.getMethod()).append("] ");
+		stringBuilder.append("path=[").append(httpServletRequest.getRequestURI()).append("] ");
+		stringBuilder.append("headers=[").append(buildHeadersMap(httpServletRequest)).append("] ");
+
+		if (!parameters.isEmpty()) {
+			stringBuilder.append("parameters=[").append(parameters).append("] ");
+		}
+
+		if (body != null) {
+			stringBuilder.append("body=[" + body + "]");
+		}
+
+		log.info(stringBuilder.toString());
+	}
+
+	@Override
+	public void logResponse(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object body) {
+		StringBuilder stringBuilder = new StringBuilder();
+		String[] maskDataList1 = { "propertyAddress", "creditCard", "creditCardExpiry", "socialSecurityNumber" };
+		String[] encryptDataList1 = { "name", "type","street","city" };
+
+		String contents = "";
+		JSONObject json = null;
+		JSONObject json1 = new JSONObject();
+		try (FileReader fileReader = new FileReader("src/main/resources/fileTest.txt");
+				BufferedReader reader = new BufferedReader(fileReader)) {
+			contents = reader.lines()
+					.collect(Collectors.joining(System.lineSeparator()));
+
+			System.out.println(contents);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			json = new JSONObject(contents);
+
+			json1 = function(json, "street");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		stringBuilder.append("RESPONSE ");
+		stringBuilder.append("method=[").append(httpServletRequest.getMethod()).append("] ");
+		stringBuilder.append("path=[").append(httpServletRequest.getRequestURI()).append("] ");
+		stringBuilder.append("responseHeaders=[").append(buildHeadersMap(httpServletResponse)).append("] ");
+		//        stringBuilder.append("responseBody=[").append(body.).append("] ");
+		//log.info("body.getClass().getSimpleName() : " + body.getClass().getDeclaredFields());
+		log.info("body.getClass().getSimpleName() : " + body.getClass().getSimpleName());
+
+
+		log.info("body.toString() : " + body.toString());
+		log.info("JSONObject : " + json1.toString());
+		/*
+		 * for(int i = 0; i<body.names().length(); i++){ Log.v(TAG, "key = " +
+		 * jobject.names().getString(i) + " value = " +
+		 * jobject.get(jobject.names().getString(i))); }
+		 */        
+		stringBuilder.append("responseBody=[").append(body).append("] ");
+
+		log.info(stringBuilder.toString());
+	}
+
+
+	// private  JSONObject function(JSONObject obj, String keyMain,String valueMain, String newValue) throws Exception {
+	private  JSONObject function(JSONObject obj, String strMaskKey) throws Exception {
+		log.info("function.toString() encryptDataList : " + encryptDataList.toString());
+		log.info("function.toString() maskDataList : " + maskDataList.toString());
+		String[] maskDataList1 = { "propertyAddress", "creditCard", "creditCardExpiry", "socialSecurityNumber" };
+		String[] encryptDataList1 = { "name", "type","street","city" };
+		log.info("function.toString() encryptDataList1 : " + encryptDataList1.toString());
+		log.info("function.toString() maskDataList1 : " + maskDataList1.toString());
+		// We need to know keys of Jsonobject
+		JSONObject json = new JSONObject();
+		Iterator iterator = obj.keys();
+		String key = null;
+		while (iterator.hasNext()) {
+			key = (String) iterator.next();
+			// if object is just string we change value in key
+			if ((obj.optJSONArray(key)==null) && (obj.optJSONObject(key)==null)) {
+				// if ((key.equals(keyMain)) && (obj.get(key).toString().equpals(valueMain))) {
+				//if (key.equals(strMaskKey)) {
+				// put new value
+				if (Arrays.asList(maskDataList).contains(key)) {
+					// put new value
+					obj.put(key, replaceDigits(obj.get(key).toString()));
+					//return obj;
+				} else if (Arrays.asList(encryptDataList).contains(key)) {
+					obj.put(key, logValueEncryptionUsingJASYPT(obj.get(key).toString()));
+					//return obj;
+				}
+			}
+
+			// if it's jsonobject
+			if (obj.optJSONObject(key) != null) {
+				//function(obj.getJSONObject(key), keyMain, valueMain, newValue);
+				function(obj.getJSONObject(key), strMaskKey);
+			}
+
+			// if it's jsonarray
+			if (obj.optJSONArray(key) != null) {
+				JSONArray jArray = obj.getJSONArray(key);
+				for (int i=0;i<jArray.length();i++) {
+					//function(jArray.getJSONObject(i), keyMain, valueMain, newValue);
+					function(jArray.getJSONObject(i), strMaskKey);
+				}
+			}
+		}
+		return obj;
+	}
+
+
+	private String replaceDigits(String text) {
+		StringBuffer buffer = new StringBuffer(text.length());
+		Pattern pattern = Pattern.compile("\\d");
+		Matcher matcher = pattern.matcher(text);
+		while (matcher.find()) {
+			matcher.appendReplacement(buffer, "X");
+		}
+		return buffer.toString();
+	}
+
+	private String logValueEncryptionUsingJASYPT(String value) {
+		System.out.println("Original Value : "+value);
+		String mpCryptoPassword = "BornToFight";
+		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+		encryptor.setPassword(mpCryptoPassword);
+		String encryptedPassword = encryptor.encrypt(value);
+		System.out.println(encryptedPassword);
+
+		StandardPBEStringEncryptor decryptor = new StandardPBEStringEncryptor();
+		decryptor.setPassword(mpCryptoPassword);
+		System.out.println(decryptor.decrypt(encryptedPassword));
+
+		return encryptedPassword;
+	}
+	private Map<String, String> buildParametersMap(HttpServletRequest httpServletRequest) {
+		Map<String, String> resultMap = new HashMap<>();
+		Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+
+		while (parameterNames.hasMoreElements()) {
+			String key = parameterNames.nextElement();
+			String value = httpServletRequest.getParameter(key);
+			resultMap.put(key, value);
+		}
+		return resultMap;
+	}
+
+	private Map<String, String> buildHeadersMap(HttpServletRequest request) {
+		Map<String, String> map = new HashMap<>();
+
+		Enumeration headerNames = request.getHeaderNames();
+		while (headerNames.hasMoreElements()) {
+			String key = (String) headerNames.nextElement();
+			String value = request.getHeader(key);
+			map.put(key, value);
+		}
+
+		return map;
+	}
+
+	private Map<String, String> buildHeadersMap(HttpServletResponse response) {
+		Map<String, String> map = new HashMap<>();
+
+		Collection<String> headerNames = response.getHeaderNames();
+		for (String header : headerNames) {
+			map.put(header, response.getHeader(header));
+		}
+
+		return map;
+	}
+}
+
+
+-----------------------
+Aapplication property
+------------------------
+
+#arrayOfStringsMasking=name,type,street,city
+arrayOfStringsMasking=propertyAddress,creditCard,creditCardExpiry,socialSecurityNumber
+arrayOfStringsEncryption="name,type,street,city
