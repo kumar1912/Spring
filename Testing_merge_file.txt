@@ -467,3 +467,96 @@ https://github.com/mebinjoe/spring-boot-kafka-splunk/blob/master/pom.xml
 
 	
 	https://medium.com/@daki_98651/kafka-and-splunk-3e47d971784c
+	
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Implementing Spring Cloud Gateway Logging Filter
+Step 24 - Exploring Centralized Logging and Monitoring in GKE
+Enable Logging and Tracing APIs in Google Cloud Platform
+
+
+Examples
+https://www.youtube.com/watch?v=oLoPpKq3JgU
+	https://github.com/splunk/splunk-sdk-java.git
+		https://github.com/splunk/splunk-sdk-java/tree/master/splunk/src/main/java/com/splunk
+
+https://www.youtube.com/watch?v=v0lHZDMfBOE           *****************		
+		https://github.com/ramashanker/training/tree/master/spring-boot-splunk
+		https://github.com/ramashanker/training
+		
+
+Mastering Distributed Tracing
+https://www.packtpub.com/product/mastering-distributed-tracing/9781788628464
+		https://github.com/packtpublishing/mastering-distributed-tracing
+		https://github.com/PacktPublishing/Mastering-Distributed-Tracing/blob/master/Chapter05/exercise1/storage-service/src/main/java/storage/App.java
+			Span span = kafka.startConsumerSpan("process", headers);
+        try (Scope scope = tracer.scopeManager().activate(span, true)) 
+
+		
+https://www.packtpub.com/product/microservices-with-spring-boot-and-spring-cloud-second-edition/9781801072977		
+https://github.com/PacktPublishing/Microservices-with-Spring-Boot-and-Spring-Cloud-2E/blob/main/Chapter10/util/src/main/java/se/magnus/util/http/GlobalControllerExceptionHandler.java
+
+  private HttpErrorInfo createHttpErrorInfo(
+    HttpStatus httpStatus, ServerHttpRequest request, Exception ex) {
+
+    final String path = request.getPath().pathWithinApplication().value();
+    final String message = ex.getMessage();
+
+    LOG.debug("Returning HTTP status: {} for path: {}, message: {}", httpStatus, path, message);
+    return new HttpErrorInfo(httpStatus, path, message);
+	
+https://github.com/PacktPublishing/Microservices-with-Spring-Boot-and-Spring-Cloud-2E/blob/main/Chapter10/util/src/main/java/se/magnus/util/http/ServiceUtil.java
+
+  private String findMyHostname() {
+    try {
+      return InetAddress.getLocalHost().getHostName();
+    } catch (UnknownHostException e) {
+      return "unknown host name";
+    }
+  }
+  
+  
+ https://github.com/PacktPublishing/Mastering-Distributed-Tracing/blob/master/Chapter05/exercise1/chat-api/src/main/java/chat/ChatController.java
+ 
+ 
+ 
+ https://www.splunk.com/en_us/blog/devops/what-is-distributed-tracing-and-why-you-need-it.html
+ 
+ Take a look at the breakdown below. 
+Client sends a customer name request to Server at time: X (Trace Context: customerrequest1, SpanID: 1, timestamp: X)
+Server receives customer name request from Client at time: Y (Trace Context: customerrequest1, SpanID: 2, timestamp: Y)
+Server parses the request from the Client at time: Z (Trace Context: customerrequest1, SpanID: 3, timestamp: Z)
+
+
+‪D:\Splunk\IT2095.pdf
+D:\Splunk\IT1339.pdf
+
+
+https://app.pluralsight.com/library/courses/installing-configuring-splunk/table-of-contents
+
+		https://www.splunk.com
+		https://docs.splunk.com/Documentation
+					Core Products  --> Splunk Enterprise
+					https://docs.splunk.com/Documentation/Splunk
+					https://docs.splunk.com/Documentation/Splunk/7.2.5/Overview/AboutSplunkEnterprise
+					
+		https://answer.splunk.com/index.html
+		
+		
+		Download
+			https://www.splunk.com/en_us/download/splunk-enterprise.html
+			
+			
+			
+			email 	: kumardodda19@gmail.com
+			username : kumar191282
+			Password : Dodda@12345
+			
+			Admin
+			Admin@123
+			
+			
+http://localhost:8080/
+		Splunk Apps
+				Browse More Apps 
+						Search for "isilon" Plugin and Click on install.
