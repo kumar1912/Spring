@@ -560,3 +560,20 @@ http://localhost:8080/
 		Splunk Apps
 				Browse More Apps 
 						Search for "isilon" Plugin and Click on install.
+
+
+-------------------------------------------------------------------------------------------------------------------
+						
+https://codingnconcepts.com/spring-boot/custom-api-request-response-logging/						
+	https://github.com/ashishlahoti/springboot-api/tree/master/src/main/java/com/example/api/client
+	
+https://tanzu.vmware.com/developer/guides/request-response-logging/
+
+https://frandorado.github.io/spring/2018/11/15/log-request-response-with-body-spring.html
+		https://github.com/frandorado/spring-projects/tree/master/log-request-response-with-body/src/main/java/com/frandorado/loggingrequestresponsewithbody/interceptor
+		
+https://itzone.com.vn/en/article/displays-log-of-request-and-response-in-spring-boot/
+
+https://jkoder.com/spring-boot-rest-api-log-incoming-http-requests-and-responses/
+
+-----------------------------------------------------------------------------------------------------------------
