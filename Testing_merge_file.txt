@@ -577,3 +577,112 @@ https://itzone.com.vn/en/article/displays-log-of-request-and-response-in-spring-
 https://jkoder.com/spring-boot-rest-api-log-incoming-http-requests-and-responses/
 
 -----------------------------------------------------------------------------------------------------------------
+
+
+
+Splunk Hands-on - The Complete Data Analytics using Splunk
+	Splunk is a revolutionary analytical tool. The training will include the following:-
+	Course introduction
+	Setting up a Splunk enterprise environment
+	Building a basic production environment
+	Splunk inputs
+	Parsing and searching
+	Splunk resource management
+	Implementing knowledge objects
+	Creating lookups
+	Creating field Aliases and calculated Fields
+	Creating field extractions
+	Creating tags and event types
+	Creating workflow actions
+	Creating alerts and scheduled reports
+	Creating macros
+	Creating data models
+	
+	
+Splunk: Zero to Power User
+Splunk 2021 - Beginner to Architect
+		22. Security Use-Case - Finding Attack Vectors
+			source="secure.log" action-"Success"/"failure" src="194.874.23"
+			
+				stats -  source="secure.log" action-"Success"/"failure" | stats count by src
+				
+				Find how many failed logins from every IPs
+					source="secure.log" action-"Success"/"failure" | stats count by src
+					source="secure.log" action-"Success"/"failure" | iplocation src
+					
+					
+					create a visualization of countries in world - geostats
+					
+				Stats, eventstats, and streamstats
+					https://docs.splunk.com/Documentation/SCS/current/SearchReference/StatsCommandExamples
+					https://docs.splunk.com/Documentation/Splunk/8.2.3/SearchReference/Stats 
+					https://www.tutorialspoint.com/splunk/splunk_stats_command.htm
+					https://examples.javacodegeeks.com/splunk-stats-command-example/	       ************
+
+					https://www.devopsschool.com/tutorial/splunk/commands/stats.html          ************
+					Difference between stats and eval commands
+The stats command calculates statistics based on fields in your events. The eval command creates new fields in your events by using existing fields and an arbitrary expression.
+
+
+
+Splunk search processing language (SPL) support for BOOLEAN operators : AND, OR and NOT.
+
+
+Example : 
+source="notification-stats.csv" host="mary" sourcetype="csv" 
+|  stats count(action), dc(action) as distinct_action
+
+source="notification-stats.csv" host="mary" sourcetype="csv" 
+|  stats count by action
+
+source="notification-stats.csv" host="mary" sourcetype="csv" 
+|  stats sum(TOTAL_TRANSACTION) by year ,month
+
+source="notification-stats.csv" host="mary" sourcetype="csv" 
+|  stats sum(TOTAL_TRANSACTION) by action
+
+
+source="notification-stats.csv" host="mary" sourcetype="csv" 
+|  stats min(TOTAL_TRANSACTION) by action
+
+source="notification-stats.csv" host="mary" sourcetype="csv" 
+|  stats min(TOTAL_TRANSACTION), max(TOTAL_TRANSACTION), avg(TOTAL_TRANSACTION) by action
+
+
+
+Year	Month	ACTION	AVG_IN_SECONDS	MIN_IN_SECONDS	MAX_IN_SECONDS	TOTAL_TRANSACTION
+2021	1	Deactivation	12.523	3	27	44
+2021	1	Cancel	61.422	2	7083	391
+2021	1	Complete	51.4	2	11080	6672
+2021	1	Initial	68.869	5	7164	4152
+2021	1	Modified	96.398	3	7023	543
+2021	1	Removal	91.379	5	2141	58
+2021	1	Rescheduled	86.858	4	7307	543
+2021	1	Status	30.239	0	191727	43574
+2021	1	Starting	68.708	1	36215	3699
+2021	1	Update	262.103	8	1062	29
+2021	2	Deactivation	13.132	2	31	38
+2021	2	Cancel	155.067	2	37815	434
+2021	2	Complete	47.752	2	10894	6494
+
+
+Boolean Expressions
+
+failed root AND admin   or failed root admin
+failed root OR admin
+failed NOT (root OR admin) 
+
+Thu Oct 18 2018 00:15:06 mailsv1 sshd[3252]: Failed password for invalid user admin from 212.58.253.71 port 4027 ssh2
+Thu Oct 18 2018 00:15:06 mailsv1 sshd[3904]: Failed password for invalid user admin from 198.228.212.52 port 2647 ssh2
+
+Thu Oct 18 2018 00:15:06 mailsv1 sudo: djohnson ;  TTY=pts/0 ; PWD=/home/djohnson ; USER=root ; COMMAND=/bin/su
+Thu Oct 18 2018 00:15:06 mailsv1 sshd[5602]: Failed password for root from 88.12.32.208 port 1607 ssh2
+Thu Oct 18 2018 00:15:06 mailsv1 sshd[2583]: Failed password for root from 124.160.192.241 port 4859 ssh2
+
+
+
+25. Splunk Reports
+
+source="secure.log" action-"Success"/"failure" | iplocation src | table src country
+
+
