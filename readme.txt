@@ -1065,5 +1065,318 @@ Spring Integration: Getting Started (pluralsight)
 		the main principles off the service activator pattern is that it's a way to connect a message general to business logic without requiring the business logic to be aware off the messaging system. But by making the register method of our registration service take a message object, we did make it aware of the messaging system. Also, other code that might want to call the registration service would now need to pass a message object to the register method. So even though spring integration allows this, this way of solving this problem really violates a core principle off the service activator pattern.
 		
 		
+-----------------------------------------------------------------------------	
+Webflux
+-----------------------------------------------------------------------------
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.pluralsight.security</groupId>
+	<artifactId>mod7-crypto-portfolio</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>mod7-crypto-portfolio</name>
+	<description>Demo, WebClient token relay</description>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.6.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<build>
+		<plugins>
+		<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>10</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>			
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>4.1.0</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>webjars-locator</artifactId>
+			<version>0.34</version>
+		</dependency> 	 		 		
+  		<dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-oauth2-client</artifactId>
+		</dependency>		
+		<dependency>
+   			<groupId>org.springframework.security</groupId>
+   			<artifactId>spring-security-oauth2-jose</artifactId>
+		</dependency>	
+		<dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-taglibs</artifactId>
+		</dependency>			 					
+	</dependencies>
+</project>
+
+
+--------------------------------------
+
+package com.pluralsight.security.configuration;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.WebClient;
+
+@Configuration
+public class WebClientConfig {
+
+	@Bean
+	public WebClient webClient(ClientRegistrationRepository clientRegistrationRepository,
+								OAuth2AuthorizedClientRepository authorizedClientRepository) {
+		ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 =
+				new ServletOAuth2AuthorizedClientExchangeFilterFunction(
+						clientRegistrationRepository, authorizedClientRepository);
+		
+		return WebClient.builder()
+				.apply(oauth2.oauth2Configuration())
+				.build();
+	}
+	
+}
+
+
+__________________________________________________________________________
+
+package com.pluralsight.security.controller;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.pluralsight.security.model.CreateSupportQueryRequest;
+import com.pluralsight.security.model.PostDto;
+import com.pluralsight.security.model.SupportQueryResponse;
+
+import lombok.RequiredArgsConstructor;
+
+@Controller
+@RequiredArgsConstructor
+public class SupportQueryController {
+		
+	private static final String SUPPORT_SERVICE_DOMAIN = "http://localhost:8181";
+	private final WebClient webClient;
+	
+	@GetMapping("/support")
+	public ModelAndView getQueries(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient client, @AuthenticationPrincipal OidcUser user) {
+		SupportQueryResponse[] userSupportQueries = this.webClient.get().uri(SUPPORT_SERVICE_DOMAIN+"/support/"+user.getPreferredUsername())
+				  			 .attributes(ServletOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient(client))
+							 .retrieve()
+							 .bodyToMono(SupportQueryResponse[].class)
+							 .block();
+		return new ModelAndView("support","queries",userSupportQueries);
+	}
+
+	@GetMapping("/support/query/{id}")
+	public ModelAndView getQuery(@PathVariable String id, @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient client, @AuthenticationPrincipal OidcUser user) {
+		SupportQueryResponse response = this.webClient.get().uri(SUPPORT_SERVICE_DOMAIN+"/support/query/"+id)
+				   .attributes(ServletOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient(client))
+				   .retrieve()
+				   .bodyToMono(SupportQueryResponse.class)
+				   .block();
+		ModelAndView model = new ModelAndView("query","query",response);
+		PostDto newPost = new PostDto();
+		newPost.setResolve(response.isResolved());
+		model.addObject("newPost",new PostDto());
+		return model;
+	}	
+	
+	@GetMapping("/support/compose")
+	public ModelAndView createNewSupportQuery() {
+		ModelAndView model = new ModelAndView();
+		model.addObject("newQuery", new CreateSupportQueryRequest());
+		model.setViewName("compose");
+		return model;
+	}
+	
+}
+
+
+_____________________________________________________________________________________________________
+
+package com.pluralsight.security.controller;
+
+import java.net.URI;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.pluralsight.security.model.CreateSupportQueryRequest;
+import com.pluralsight.security.model.PostDto;
+
+import lombok.RequiredArgsConstructor;
+
+@Controller
+@RequiredArgsConstructor
+public class SupportCommandController {
+
+	private final WebClient webClient;
+	private static final String SUPPORT_SERVICE_DOMAIN = "http://localhost:8181";
+	
+	@PutMapping("/support")
+	public String createNewQuery(@ModelAttribute CreateSupportQueryRequest request, @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient client, @AuthenticationPrincipal OidcUser user) {
+		URI targetUri = UriComponentsBuilder.fromHttpUrl(SUPPORT_SERVICE_DOMAIN)
+				.path("/support")
+				.build().encode().toUri();
+				request.setUsername(user.getPreferredUsername());
+				this.webClient.put()
+				.uri(targetUri)
+	  			.attributes(ServletOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient(client))
+				.body(BodyInserters.fromObject(request))
+				.retrieve()
+				.bodyToMono(Void.class)
+				.block();
+		return "redirect:/support";
+	}
+
+	@PostMapping("/support/query/{id}")
+	public String postToQuery(@ModelAttribute PostDto postDto, @PathVariable String id, @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient client, @AuthenticationPrincipal OidcUser user) {
+		postDto.setQueryId(id);
+		URI targetUri = UriComponentsBuilder.fromHttpUrl(SUPPORT_SERVICE_DOMAIN)
+				.path("/support/query/"+id)
+				.build().encode().toUri();
+		this.webClient.post()
+		.uri(targetUri)
+		.attributes(ServletOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient(client))
+		.body(BodyInserters.fromObject(postDto))
+		.retrieve()
+		.bodyToMono(Void.class)
+		.block();
+		return "redirect:/support/query/"+postDto.getQueryId();
+	}
+	
+}
+
+
+----------------------------
+
+
+package com.pluralsight.security.model;
+
+import java.util.Calendar;
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class SupportQueryResponse {
+
+	private String id;
+	private String subject;
+	private Calendar creationTime;
+	private String username;
+	private boolean resolved;
+	private List<PostDto> posts;
+	
+}
+
+
+------------------------------------
+
+
+
+
+
+		
+		
 		
  
