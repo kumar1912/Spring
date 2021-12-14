@@ -215,3 +215,16 @@ public class StreamTest {
 }
 
 ----------------------------------------------------------------------------------------------------------------
+
+
+
+private void findLargeTradesUsingStreams(List<Trade> trades) {
+
+		trades.parallelStream()
+		.filter(trade -> trade.getQuantity() > 10000)
+		.filter(Trade::isCancelledTrade)
+		.limit(10)
+		.distinct()
+		.forEach(System.out::println);
+		
+	}
