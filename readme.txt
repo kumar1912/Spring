@@ -1068,6 +1068,18 @@ Spring Integration: Getting Started (pluralsight)
 -----------------------------------------------------------------------------	
 Webflux
 -----------------------------------------------------------------------------
+https://www.baeldung.com/spring-webclient-resttemplate
+https://www.baeldung.com/spring-webflux-timeout
+https://howtodoinjava.com/spring-webflux/webclient-set-timeouts/
+https://www.amitph.com/spring-webflux-timeouts/					Globally using HttpClient, Specific to a Request
+
+https://stackoverflow.com/questions/44593066/spring-webflux-webclient-get-body-on-error
+https://www.baeldung.com/spring-webflux-retry    
+				Next, we'll create an error Mono with our exception for the 5xx errors and use the filter method to configure our
+https://www.baeldung.com/spring-mvc-async-vs-webflux
+
+	
+
 
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -1373,7 +1385,7 @@ public class SupportQueryResponse {
 ------------------------------------
 
 
-
+---------------------------------------------------------------------------------------------------------
 
 
 		
