@@ -1381,6 +1381,71 @@ public class SupportQueryResponse {
 	
 }
 
+file:///H:/TUI_Sonata/Java_Books/Sites/allitebooks/Spring_Hibernate/Spring%20Persistence%20with%20Hibernate,%202nd%20edition.pdf
+
+https://persistencelayer.wixsite.com/springboot-hibernate/post/how-to-batch-inserts-in-spring-boot-style-via-completablefuture
+		https://github.com/AnghelLeonard/Hibernate-SpringBoot/blob/master/HibernateSpringBootBatchInsertsCompletableFuture/src/main/java/com/bookstore/service/BookstoreService.java
+				authorRepository.saveInBatch(authors);
+				https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootBatchInsertsCompletableFuture/src/main/java/com/bookstore/impl
+				https://github.com/AnghelLeonard/Hibernate-SpringBoot/blob/master/HibernateSpringBootBatchInsertsCompletableFuture/src/main/resources/application.properties
+				spring.jpa.hibernate.ddl-auto=create
+				spring.jpa.show-sql=false
+
+
+				
+https://egkatzioura.com/2017/10/25/spring-and-async/
+https://swathisprasad.medium.com/multi-threading-in-spring-boot-using-completablefuture-a7ca68a0fe48
+https://dzone.com/articles/spring-transaction-management-over-multiple-thread-1
+https://www.baeldung.com/spring-data-java-8
+https://nirajsonawane.github.io/2019/01/27/Write-Clean-asynchronous-code-with-CompletableFuture-Java-8/
+
+CompletableFuture<Integer> thenApply = CompletableFuture.supplyAsync(this::findAccountNumber)
+		 .thenApply(this::calculateBalance)						 
+		 .thenApply(this::notifyBalance)		
+		 .handle((ok, ex) -> {
+			System.out.println("Code That we want to run in finally ");
+			if (ok != null) {
+					System.out.println("No Exception !!");					
+			} else {		
+					System.out.println("Got Exception " + ex.getMessage());
+					return -1;
+					}
+			return ok;
+			});	
+}
+
+https://coderoad.ru/35628764/CompletableFuture-vs-Spring-%D1%82%D1%80%D0%B0%D0%BD%D0%B7%D0%B0%D0%BA%D1%86%D0%B8%D0%B9
+https://www.javacodegeeks.com/2016/04/spring-async-javas-8-completablefuture.html
+
+		https://dzone.com/articles/20-examples-of-using-javas-completablefuture
+			Working through these examples helps better understand this API. You can find the full code of these examples on 
+			GitHub.
+				https://github.com/manouti/completablefuture-examples/blob/master/src/main/java/com/example/completablefuture/RealLifeCompletableFutureExample.java
+
+				https://thepracticaldeveloper.com/differences-between-completablefuture-future-and-streams/     ****************
+								https://github.com/mechero/completable-future-example
+				
+				https://geowarin.com/completable-futures-with-spring-async/
+						log.info("{} gets the content of the safety box: '{}'", thief.getName(), thief.handleLoot(loot));
+https://www.capitalone.com/tech/software-engineering/migrating-java-apps-to-reactive/
+
+	List results = Stream.of(CompletableFuture.runAsync(() -> downstreamCall()), CompletableFuture.runAsync(() -> downstreamCall2()))
+ 
+https://programmerall.com/article/7240437783/
+https://www.fatalerrors.org/a/0d9y1jE.html
+ Complete () important...
+ 
+ 
+ https://github.com/Apress/spring-boot-persistence-best-practices/blob/master/HibernateSpringBootBatchInsertsJpaRepository/src/main/java/com/bookstore/service/BookstoreService.java
+ if (authors.size() > 0) {
+            authorRepository.saveAll(authors);
+            authors.clear();
+        }
+		
+		@Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
+    private int batchSize;
+	
+https://github.com/andreipall/Spring-Boot-JPA/blob/master/HibernateSpringBootBatchInsertsEntityManager/src/main/java/com/bookstore/service/BookstoreService.java
 
 ------------------------------------
 
