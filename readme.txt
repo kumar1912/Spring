@@ -1449,6 +1449,102 @@ https://github.com/andreipall/Spring-Boot-JPA/blob/master/HibernateSpringBootBat
 
 ------------------------------------
 
+https://www.baeldung.com/spring-webclient-resttemplate
+https://www.baeldung.com/spring-webflux-timeout
+https://howtodoinjava.com/spring-webflux/webclient-set-timeouts/
+https://www.amitph.com/spring-webflux-timeouts/					Globally using HttpClient, Specific to a Request
+
+https://stackoverflow.com/questions/44593066/spring-webflux-webclient-get-body-on-error
+https://www.baeldung.com/spring-webflux-retry    
+				Next, we'll create an error Mono with our exception for the 5xx errors and use the filter method to configure our
+https://www.baeldung.com/spring-mvc-async-vs-webflux
+
+private void findLargeTradesUsingStreams(List<Trade> trades) {
+
+		trades.parallelStream()
+		.filter(trade -> trade.getQuantity() > 10000)
+		.filter(Trade::isCancelledTrade)
+		.limit(10)
+		.distinct()
+		.forEach(System.out::println);
+		
+	}
+	
+	
+https://www.oreilly.com/content/java-8-functional-interfaces/
+private List<Trade> filterTrades(ITrade tradeLambda, List<Trade> trades) {
+  List<Trade> newTrades = new ArrayList<>();
+
+  for (Trade trade : trades) {
+    if (tradeLambda.check(trade)) {
+      newTrades.add(trade);
+    }
+  }
+  return newTrades;
+}
+
+
+// Lambda for big trade
+ITrade bigTradeLambda = (Trade t) -> t.getQuantity() > 10000000;
+
+// Lambda that checks if the trade is a new large google trade
+ITrade issuerBigNewTradeLambda = (t) -> {
+    return t.getIssuer().equals("GOOG") &&
+           t.getQuantity() > 10000000 &&
+           t.getStatus().equals("NEW");
+  };
+  
+  
+  
+  -----------------------------------------------------------------
+  
+  https://stackoverflow.com/questions/28322464/in-java-8-transform-optionalstring-of-an-empty-string-in-optional-empty
+  https://www.baeldung.com/java-empty-string-to-empty-optional
+  https://www.baeldung.com/java-optional
+  
+  https://www.tabnine.com/code/java/methods/java.util.Optional/ofNullable
+  MustacheViewRenderer.configure(...)
+@Override
+public void configure(Map<String, String> options) {
+  useCache = Optional.ofNullable(options.get("cache")).map(Boolean::parseBoolean).orElse(true);
+  fileRoot = Optional.ofNullable(options.get("fileRoot")).map(File::new);
+  
+  
+  public List<GroupingOperation> getGroupingOperations(QuerySpecification querySpecification)
+{
+  return Optional.ofNullable(groupingOperations.get(NodeRef.of(querySpecification)))
+      .orElse(emptyList());
+}
+
+https://stackoverflow.com/questions/38062664/how-to-return-when-an-optional-is-empty
+String o = getOptional().orElse(null);
+
+
+https://medium.com/@hopewellmutanda/java-8-optional-usage-and-best-practices-975c41d66822
+
+
+------------------------------------------------------------------------------------------------------
+
+
+package collection.java_8;
+import java.util.Optional;
+public class OptionalBasicExample2 {
+
+	public static void main(String[] args) {
+
+		Optional<String> gender = Optional.of("MALE");
+		String answer1 = "Yes";
+		String answer2 = null;
+		String answer3 = "";
+		String answer4 = "";
+		String answer5 = null;
+		
+		System.out.println("1 : " + Optional.ofNullable(answer5).orElse(null));
+		System.out.println("4 : " + Optional.ofNullable(answer5).filter(s -> !s.isEmpty()).orElse(null));	
+	}
+
+		
+	}
 
 ---------------------------------------------------------------------------------------------------------
 
