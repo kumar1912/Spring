@@ -1548,6 +1548,29 @@ public class OptionalBasicExample2 {
 
 ---------------------------------------------------------------------------------------------------------
 
+package collection.java_8;
+
+import java.util.Optional;
+
+public class OptionalBasicExample {
+
+	public static void main(String[] args) {
+		String shapes = "Y";
+		System.out.println(resolveShapeType(shapes));
+		 
+	}
+	
+	public static String resolveShapeType(final String shapes) {
+	    return Optional.ofNullable(shapes).filter(s -> !s.isEmpty()).orElse("N/A").equals("Y")? "YES": Optional.ofNullable(shapes).filter(s -> !s.isEmpty()).orElse("N/A").equals("N")? "NO": Optional.ofNullable(shapes).filter(s -> !s.isEmpty()).orElse("N/A");
+	}
+	
+	/*
+	 * public ShapeType resolveShapeType(final List<Shape> shapes) { int sides =
+	 * shapes.stream() .mapToInt(Shape::getSideCount) .filter(count -> count==4 ||
+	 * count==6) .max().orElse(0); return sides==6? ShapeType.HEXA: sides==4?
+	 * ShapeType.RECT: ShapeType.GENERIC; }
+	 */
+}
 
 		
 		
