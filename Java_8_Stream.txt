@@ -1,3 +1,8 @@
+https://stackoverflow.com/questions/41448826/if-elseif-else-like-functionality-with-java-8-streams
+https://stackoverflow.com/users/2711488/holger
+https://stackoverflow.com/questions/28032827/java-8-lambdas-function-identity-or-t-t/28041480#28041480
+
+
 package j8.streams.basics;
 
 import java.util.ArrayList;
