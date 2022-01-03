@@ -1,3 +1,10 @@
+
+
+All concepts ********
+https://www.javatips.net/api/kylo-master/services/audit-logging-service/audit-logging-jpa/src/main/java/com/thinkbiganalytics/metadata/jpa/audit/JpaAuditLogEntry.java  **********
+
+
+
 https://www.java-success.com/10-%e2%99%a6-executorservice-vs-forkjoin-future-vs-completablefuture-interview-qa/
 
 import java.util.concurrent.CompletableFuture;
