@@ -1,0 +1,216 @@
+Explaination
+https://www.fatalerrors.org/a/spring-boot-learning-spring-boot-integrates-quartz-a-powerful-timing-framework.html
+https://howtodoinjava.com/spring-batch/batch-quartz-java-config-example/
+
+https://spring.io/guides/gs/managing-transactions/          Component - Transaction
+
+@Transactional(propagation=Propagation.REQUIRED,rollbackFor=RuntimeException.class)
+@Transactional(propagation=Propagation.REQUIRED)
+https://www.techgeeknext.com/spring-boot/spring-boot-transaction-propagation
+
+file:///H:/TUI_Sonata/Java_Books/Sites/allitebooks/Spring_Hibernate/Spring%20Persistence%20with%20Hibernate,%202nd%20edition.pdf
+
+https://persistencelayer.wixsite.com/springboot-hibernate/post/how-to-batch-inserts-in-spring-boot-style-via-completablefuture
+		https://github.com/AnghelLeonard/Hibernate-SpringBoot/blob/master/HibernateSpringBootBatchInsertsCompletableFuture/src/main/java/com/bookstore/service/BookstoreService.java
+				authorRepository.saveInBatch(authors);
+				https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootBatchInsertsCompletableFuture/src/main/java/com/bookstore/impl
+				https://github.com/AnghelLeonard/Hibernate-SpringBoot/blob/master/HibernateSpringBootBatchInsertsCompletableFuture/src/main/resources/application.properties
+				spring.jpa.hibernate.ddl-auto=create
+				spring.jpa.show-sql=false
+
+
+http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/tutorial-lesson-03.html
+				
+https://egkatzioura.com/2017/10/25/spring-and-async/
+https://github.com/gkatzioura/egkatzioura.wordpress.com/blob/master/SpringThreading/src/main/java/com/gkatzioura/service/AsynchronousService.java
+https://swathisprasad.medium.com/multi-threading-in-spring-boot-using-completablefuture-a7ca68a0fe48
+https://dzone.com/articles/spring-transaction-management-over-multiple-thread-1
+https://www.baeldung.com/spring-data-java-8
+https://nirajsonawane.github.io/2019/01/27/Write-Clean-asynchronous-code-with-CompletableFuture-Java-8/
+
+CompletableFuture<Integer> thenApply = CompletableFuture.supplyAsync(this::findAccountNumber)
+		 .thenApply(this::calculateBalance)						 
+		 .thenApply(this::notifyBalance)		
+		 .handle((ok, ex) -> {
+			System.out.println("Code That we want to run in finally ");
+			if (ok != null) {
+					System.out.println("No Exception !!");					
+			} else {		
+					System.out.println("Got Exception " + ex.getMessage());
+					return -1;
+					}
+			return ok;
+			});	
+}
+
+https://coderoad.ru/35628764/CompletableFuture-vs-Spring-%D1%82%D1%80%D0%B0%D0%BD%D0%B7%D0%B0%D0%BA%D1%86%D0%B8%D0%B9
+https://www.javacodegeeks.com/2016/04/spring-async-javas-8-completablefuture.html
+
+		https://dzone.com/articles/20-examples-of-using-javas-completablefuture
+			Working through these examples helps better understand this API. You can find the full code of these examples on 
+			GitHub.
+				https://github.com/manouti/completablefuture-examples/blob/master/src/main/java/com/example/completablefuture/RealLifeCompletableFutureExample.java
+
+				https://thepracticaldeveloper.com/differences-between-completablefuture-future-and-streams/     ****************
+								https://github.com/mechero/completable-future-example
+				
+				https://geowarin.com/completable-futures-with-spring-async/
+						log.info("{} gets the content of the safety box: '{}'", thief.getName(), thief.handleLoot(loot));
+https://www.capitalone.com/tech/software-engineering/migrating-java-apps-to-reactive/
+
+	List results = Stream.of(CompletableFuture.runAsync(() -> downstreamCall()), CompletableFuture.runAsync(() -> downstreamCall2()))
+ 
+https://programmerall.com/article/7240437783/
+https://www.fatalerrors.org/a/0d9y1jE.html
+ Complete () important...
+ 
+ 
+ https://github.com/Apress/spring-boot-persistence-best-practices/blob/master/HibernateSpringBootBatchInsertsJpaRepository/src/main/java/com/bookstore/service/BookstoreService.java
+ if (authors.size() > 0) {
+            authorRepository.saveAll(authors);
+            authors.clear();
+        }
+		
+		@Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
+    private int batchSize;
+	
+https://github.com/andreipall/Spring-Boot-JPA/blob/master/HibernateSpringBootBatchInsertsEntityManager/src/main/java/com/bookstore/service/BookstoreService.java
+
+https://www.baeldung.com/spring-webclient-resttemplate
+https://www.baeldung.com/spring-webflux-timeout
+https://howtodoinjava.com/spring-webflux/webclient-set-timeouts/
+https://www.amitph.com/spring-webflux-timeouts/					Globally using HttpClient, Specific to a Request
+
+https://stackoverflow.com/questions/44593066/spring-webflux-webclient-get-body-on-error
+https://www.baeldung.com/spring-webflux-retry    
+				Next, we'll create an error Mono with our exception for the 5xx errors and use the filter method to configure our
+https://www.baeldung.com/spring-mvc-async-vs-webflux
+
+private void findLargeTradesUsingStreams(List<Trade> trades) {
+
+		trades.parallelStream()
+		.filter(trade -> trade.getQuantity() > 10000)
+		.filter(Trade::isCancelledTrade)
+		.limit(10)
+		.distinct()
+		.forEach(System.out::println);
+		
+	}
+	
+	
+https://www.oreilly.com/content/java-8-functional-interfaces/
+private List<Trade> filterTrades(ITrade tradeLambda, List<Trade> trades) {
+  List<Trade> newTrades = new ArrayList<>();
+
+  for (Trade trade : trades) {
+    if (tradeLambda.check(trade)) {
+      newTrades.add(trade);
+    }
+  }
+  return newTrades;
+}
+
+
+// Lambda for big trade
+ITrade bigTradeLambda = (Trade t) -> t.getQuantity() > 10000000;
+
+// Lambda that checks if the trade is a new large google trade
+ITrade issuerBigNewTradeLambda = (t) -> {
+    return t.getIssuer().equals("GOOG") &&
+           t.getQuantity() > 10000000 &&
+           t.getStatus().equals("NEW");
+  };
+  
+  
+  
+  -----------------------------------------------------------------
+  
+  https://stackoverflow.com/questions/28322464/in-java-8-transform-optionalstring-of-an-empty-string-in-optional-empty
+  https://www.baeldung.com/java-empty-string-to-empty-optional
+  https://www.baeldung.com/java-optional
+  
+  https://www.tabnine.com/code/java/methods/java.util.Optional/ofNullable
+  MustacheViewRenderer.configure(...)
+@Override
+public void configure(Map<String, String> options) {
+  useCache = Optional.ofNullable(options.get("cache")).map(Boolean::parseBoolean).orElse(true);
+  fileRoot = Optional.ofNullable(options.get("fileRoot")).map(File::new);
+  
+  
+  public List<GroupingOperation> getGroupingOperations(QuerySpecification querySpecification)
+{
+  return Optional.ofNullable(groupingOperations.get(NodeRef.of(querySpecification)))
+      .orElse(emptyList());
+}
+
+https://stackoverflow.com/questions/38062664/how-to-return-when-an-optional-is-empty
+String o = getOptional().orElse(null);
+
+
+https://medium.com/@hopewellmutanda/java-8-optional-usage-and-best-practices-975c41d66822
+
+
+------------------------------------------------------------------------------------------------------
+
+
+package collection.java_8;
+import java.util.Optional;
+public class OptionalBasicExample2 {
+
+	public static void main(String[] args) {
+
+		Optional<String> gender = Optional.of("MALE");
+		String answer1 = "Yes";
+		String answer2 = null;
+		String answer3 = "";
+		String answer4 = "";
+		String answer5 = null;
+		
+		System.out.println("1 : " + Optional.ofNullable(answer5).orElse(null));
+		System.out.println("4 : " + Optional.ofNullable(answer5).filter(s -> !s.isEmpty()).orElse(null));	
+	}
+
+		
+	}
+	
+	
+	
+https://stackoverflow.com/questions/17669445/java-example-dynamic-job-scheduling-with-quartz
+https://stackoverflow.com/questions/55344238/dynamic-job-scheduling-in-spring-boot-with-quartz-scheduler?rq=1
+
+https://docs.spring.io/spring-batch/docs/2.1.x/xref-test/org/springframework/batch/sample/quartz/JobLauncherDetailsTests.html
+https://docs.spring.io/spring-batch/docs/2.1.x/xref-test/org/springframework/batch/sample/CustomerFilterJobFunctionalTests.html
+
+
+https://onloadcode.com/quartz-scheduler-using-rest-api-with-spring-boot-and-mongodb/
+
+H:\Kumar_Important_Books\allitebooks\Spring\spring-boot-2-recipes-master\ch05
+
+package com.apress.springbootrecipes.order;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.reactive.server.WebTestClient;
+
+import static org.junit.Assert.*;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class OrderControllerTest {
+
+  @Autowired
+  private WebTestClient webTestClient;
+
+
+  @Test
+  public void foo() {
+
+    webTestClient.get().uri("/orders")
+            .exchange()
+              .expectStatus().isOk();
+  }
+
+}
