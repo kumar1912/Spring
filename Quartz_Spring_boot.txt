@@ -8,6 +8,14 @@ https://spring.io/guides/gs/managing-transactions/          Component - Transact
 @Transactional(propagation=Propagation.REQUIRED)
 https://www.techgeeknext.com/spring-boot/spring-boot-transaction-propagation
 
+https://github.com/davidkiss/spring-boot-quartz-demo/blob/master/src/test/java/com/kaviddiss/bootquartz/ApplicationTest.java
+https://www.javatips.net/api/kylo-master/services/scheduler-service/scheduler-quartz/src/test/java/com/thinkbiganalytics/scheduler/QuartzSchedulerTest.java
+
+https://stackabuse.com/guide-to-quartz-with-spring-boot-job-scheduling-and-automation/          Description :    **** Guide to Quartz with Spring Boot - Job Scheduling and Automation
+
+http://useof.org/java-open-source/org.quartz.JobExecutionContext   ********** Junit
+
+
 file:///H:/TUI_Sonata/Java_Books/Sites/allitebooks/Spring_Hibernate/Spring%20Persistence%20with%20Hibernate,%202nd%20edition.pdf
 
 https://persistencelayer.wixsite.com/springboot-hibernate/post/how-to-batch-inserts-in-spring-boot-style-via-completablefuture
