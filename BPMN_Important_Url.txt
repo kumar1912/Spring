@@ -2,9 +2,18 @@ https://docs.camunda.org/manual/7.17/reference/bpmn20/
 https://camunda.com/download/
 https://camunda.com/download/modeler/
 
+https://medium.com/nerd-for-tech/bpmn2-0-camunda-workflow-spring-boot-application-2381f3d42e5f     (Start ‘Cook Masala Veggies Noodles’ process)
+ 
+
 Get Started With Camunda and Spring boot :  https://www.youtube.com/watch?v=sHgf_EsQzfc
 												https://github.com/camunda-community-hub/Camunda-Spring-Boot-Tutorial-Lafayette   ****
 														https://github.com/camunda-community-hub/Camunda-7-Spring-Boot-Tutorial-Lafayette.git
+														
+														https://www.youtube.com/watch?v=sgcSm7YneTs       ***********
+														
+														
+														https://www.youtube.com/watch?v=6xqCnD1VAG8       Camunda | How to get started with camunda | Exclusive Gateway in Camunda | Camunda Tutorial
+
 
 
 E:\Udemy_Clary\BPMN_tool\my-project.zip
@@ -20,12 +29,69 @@ E:\Udemy_Clary\BPMN_tool\my-project.zip
 					To check deployment: select * from ACT_RE_DEPLOYMENT
 					To check running process: select * from ACT_RE_PROCDEF
 					To check running task: select * from ACT_RU_TASK
+					Select * from  ACT_HI_TASKINST             **********
+					SELECT * FROM ACT_GE_BYTEARRAY 
+					SELECT * FROM ACT_HI_ACTINST               ********  ACT_TYPE_/userTask/startEvent/	userTask/	userTask
+					
+					SELECT * FROM ACT_HI_DETAIL 
 					
 				Go to Tasklist and click on the claim and complete the task. Refresh the Cockpit and you can see the running process is completed.
 
 				Further, check out the below tables to see the history of the executed process and task where all the running tasks and processes are completed and having updated END_TIME_.
 					To check the completed process: SELECT * FROM ACT_HI_PROCINST
 					To check the completed task: select * from ACT_HI_TASKINST
+					
+
+
+https://github.com/camunda-community-hub/Camunda-7-Run-Tutorial-Lafayette  *************					
+
+
+https://github.com/camunda/camunda-bpm-platform
+		https://github.com/camunda/camunda-bpm-platform/blob/master/examples/invoice/pom.xml
+		
+https://camunda.com/blog/2018/02/custom-tasklist-examples/		
+https://github.com/camunda-consulting/camunda-7-code-examples/tree/master/snippets/camunda-tasklist-examples
+
+https://github.com/camunda/camunda-bpm-examples/tree/master/deployment/spring-boot
+
+https://blog.devgenius.io/embedded-camunda-how-to-cook-it-properly-part-i-e7e96fa99b3f              ********************
+					
+Mphasis
+
+https://medium.com/nerd-for-tech/bpmn2-0-camunda-workflow-spring-boot-application-2381f3d42e5f
+https://github.com/sourabhparsekar/camunda-masala-noodles       sample taken ***********
+
+
+https://camunda.com/blog/2021/03/external-task-client-spring-bootified/
+
+https://github.com/huksley/camunda-spring-boot-example/blob/master/src/main/java/com/github/huksley/camunda/ExternalTaskExecutor.java
+
+https://medium.com/chain-analytica/how-to-deploy-a-bpmn-start-and-complete-a-transaction-with-camunda-rest-23431ae753
+
+
+https://github.com/camunda-community-hub/Make-Rest-Calls-From-Camunda-7-Example            --- Asynchronous before and Asynchronous after
+
+
+camunda spring boot rest api example with gradle build with Process id and multiple task
+https://github.com/nikkijuk/pigeongram **********
+
+
+Camunda Rest APIs
+https://github.com/camunda/camunda-docs-manual/tree/master/content/reference/rest           Important from Wells
+
+
+
+https://medium.com/turkcell/camunda-springboot-starter-1-5f10825ec580     
+You can easily have access to TaskService, RuntimeService, FormService or RepositoryService of camunda by autowiring them in your service class.
+
+
+https://github.com/camunda/camunda-bpm-examples
+	https://github.com/camunda/camunda-bpm-examples/tree/master/usertask  ******************** 
+	https://github.com/camunda/camunda-bpm-examples/tree/master/spring-boot-starter      *************************************** 
+	
+	
+http://localhost:10101/camunda-masala-noodles/engine-rest/deployment	
+http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition
 					
 					
 					
