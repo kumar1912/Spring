@@ -130,6 +130,107 @@ spring:
     console:
       enabled: true
       path: /h2-console
+      
+      
+      
+      _____________________________________
+      
+      
+@Query(SELECT * FROM ACT_HI_TASKINST )
+
+Optional<List<TasklistMO>> getTaskListByProcessId(@param(value="Id") String Id);
+
+
+package com.example.workflow.entity;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "ACT_HI_TASKINST")
+@Data
+public class TasklistMO {
+
+	@Id
+	@Column(name = "ID_")
+	private String id;
+	
+	@Column(name = "TASK_DEF_KEY_")
+	private String taskDefKey;
+	
+	@Column(name = "PROC_DEF_KEY_")
+	private String procDefKey;
+	
+	@Column(name = "PROC_DEF_ID_")
+	private String procDefId;
+	
+	@Column(name = "ROOT_PROC_INST_ID_")
+	private String rootProcInstId;
+	
+	@Column(name = "PROC_INST_ID_")
+	private String procInstId;
+	
+	@Column(name = "EXECUTION_ID_")
+	private String excutionId;
+	
+	@Column(name = "CASE_DEF_KEY_")
+	private String CaseDefKey;
+	
+	@Column(name = "CASE_DEF_ID_")
+	private String CaseDefId;
+	
+	@Column(name = "CASE_INST_ID_")
+	private String CaseInstId;
+	
+	@Column(name = "CASE_EXECUTION_ID_")
+	private String CaseExecutionId;
+	
+	@Column(name = "ACT_INST_ID_")
+	private String actInstId;
+	
+	@Column(name = "NAME_")
+	private String name;
+	
+	@Column(name = "PARENT_TASK_ID_")
+	private String parentTaskId;
+
+	@Column(name = "DESCRIPTION_")
+	private String description;
+
+	@Column(name = "OWNER_ ")
+	private String owner;
+	
+	@Column(name = "ASSIGNEE_")
+	private String assignee;
+	
+	@Column(name = "START_TIME_")
+	private LocalDateTime startTime;
+	
+	@Column(name = "END_TIME_")
+	private LocalDateTime endTime;
+	
+	@Column(name = "DURATION_")
+	private Integer duration;
+	
+	@Column(name = "DELETE_REASON_")
+	private String deleteReason;
+	
+	@Column(name = "PRIORITY_")
+	private Integer priority;
+	
+	@Column(name = "DUE_DATE_")
+	//@DateTimeFormat(pattern = "yyyy-mm-dd")
+	private LocalDateTime dueDate;
+	
+	@Column(name = "FOLLOW_UP_DATE_")
+	private LocalDateTime followUpdate;
+	
+	@Column(name = "TENANT_ID")
+	private String tenantId;
+	
+	@Column(name = "REMOVAL_TIME_")
+	private String removalTime;
+}
+
 
 
 camunda.bpm:
