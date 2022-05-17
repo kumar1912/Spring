@@ -233,6 +233,20 @@ public class TasklistMO {
 
 
 
+Rest API calls					
+https://stackoverflow.com/questions/68190743/complete-camunda-user-task-on-springboot
+
+
+https://github.com/camunda/camunda-bpm-examples/blob/master/spring-boot-starter/example-simple/README.md
+		camunda-bpm-examples/spring-boot-starter/example-simple/README.md
+		
+		
+		
+https://camunda.com/blog/2021/03/external-task-client-spring-bootified/
+https://github.com/camunda/camunda-bpm-examples/tree/master/spring-boot-starter
+
+
+
 camunda.bpm:
   admin-user:
     id: admin
