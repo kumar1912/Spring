@@ -255,3 +255,281 @@ camunda.bpm:
     db-reporter-activate: false
   database:
     schema-update: create-drop
+    
+    Rest API calls					
+https://stackoverflow.com/questions/68190743/complete-camunda-user-task-on-springboot
+
+
+https://github.com/camunda/camunda-bpm-examples/blob/master/spring-boot-starter/example-simple/README.md
+		camunda-bpm-examples/spring-boot-starter/example-simple/README.md
+		
+		
+		
+https://camunda.com/blog/2021/03/external-task-client-spring-bootified/
+https://github.com/camunda/camunda-bpm-examples/tree/master/spring-boot-starter
+
+
+http://localhost:8080/engine-rest/task?processInstanceId=6700a798-d5ac-11ec-9ef0-00e04cc10232
+
+
+-------------------------------------------------------------------------------
+
+http://localhost:10101/camunda-masala-noodles/engine-rest/deployment
+[
+    {
+        "links": [],
+        "id": "0d6448f3-d1e3-11ec-bc38-00155daf714f",
+        "name": "SpringAutoDeployment",
+        "source": null,
+        "deploymentTime": "2022-05-12T16:32:45.373+0530",
+        "tenantId": null
+    }
+]
+
+http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition
+
+[
+    {
+        "id": "CookMasalaVeggiesNoodles:1:0d8c6a65-d1e3-11ec-bc38-00155daf714f",
+        "key": "CookMasalaVeggiesNoodles",
+        "category": "http://bpmn.io/schema/bpmn",
+        "description": null,
+        "name": "Cook Masala Veggies Noodles",
+        "version": 1,
+        "resource": "E:\\Udemy_Clary\\BPMN_tool\\camunda-masala-noodles-main\\target\\classes\\cook_noodles_process.bpmn",
+        "deploymentId": "0d6448f3-d1e3-11ec-bc38-00155daf714f",
+        "diagram": null,
+        "suspended": false,
+        "tenantId": null,
+        "versionTag": null,
+        "historyTimeToLive": null,
+        "startableInTasklist": true
+    }
+]
+
+
+http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition/count
+{
+    "count": 1
+}
+
+
+http://localhost:10101/camunda-masala-noodles/engine-rest/task?processInstanceId=aabc1e75-d1df-11ec-9314-00155daf714f
+
+		http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition/key/0d8c6a65-d1e3-11ec-bc38-00155daf714f
+DELETE :http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition/key/0d8c6a65-d1e3-11ec-bc38-00155daf714f
+		http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition/key/0d8c6a65-d1e3-11ec-bc38-00155daf714f/deployed-start-form   Get Deployed start form
+		http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition/key/0d8c6a65-d1e3-11ec-bc38-00155daf714f/diagram   Get diagram
+PUT : 	http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition/key/0d8c6a65-d1e3-11ec-bc38-00155daf714f/form-variables Get start form variables
+		http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition/key/0d8c6a65-d1e3-11ec-bc38-00155daf714f/history-time-to-live Update history time to live
+		http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition/key/0d8c6a65-d1e3-11ec-bc38-00155daf714f/rendered-form Get rendered start form
+POST : 	http://localhost:10101/camunda-masala-noodles/engine-rest/process-definition/key/0d8c6a65-d1e3-11ec-bc38-00155daf714f/start  Start instance
+
+_----------------------------------------------------------------------------------
+
+https://forum.camunda.io/t/camunda-api-to-get-list-of-tasks-in-a-process-definition/22026/4
+
+
+		To be specific we want to display all the task/subprocess names in our UI.
+
+		For example, take a recruiting workflow as below and how could we retrieve stage names using Camunda APIs:
+
+
+
+
+			That is basically how you want to fetch all your active task is your query as per my understadning.
+
+			Refer to below documentation, for all task-related activities
+			https://docs.camunda.org/manual/7.13/reference/rest/task/get-query/ 17
+
+			With this URL: localhost:8085/engine-rest/task
+			you will get all the active tasks, filter the tasks based on query parameters as per your requirement.
+
+			
+https://docs.camunda.org/manual/7.13/reference/rest/process-definition/get-query/#request			
+GET /process-definition?keyLike=invoice&sortBy=version&sortOrder=asc
+
+	"version": 1,
+	"version": 2,
+
+---------------------------------------------------------------------------------------
+
+http://localhost:8080/engine-rest/deployment
+
+[
+{
+"links": [],
+"id": "44ad9a8f-d2a4-11ec-81ad-00e04cc10232",
+"name": "SpringAutoDeployment",
+"source": null,
+"deploymentTime": "2022-05-13T15:35:51.022+0530",
+"tenantId": null
+}
+]
+
+
+http://localhost:8080/engine-rest/process-definition
+
+[
+{
+"id": "Lafayette-process-v1:1:44cbf807-d2a4-11ec-81ad-00e04cc10232",
+"key": "Lafayette-process-v1",
+"category": "http://bpmn.io/schema/bpmn",
+"description": null,
+"name": "Lafayette Version 1.",
+"version": 1,
+"resource": "E:\\Udemy_Clary\\BPMN_tool\\Lafayette\\target\\classes\\LafayetteV1.bpmn",
+"deploymentId": "44ad9a8f-d2a4-11ec-81ad-00e04cc10232",
+"diagram": null,
+"suspended": false,
+"tenantId": null,
+"versionTag": null,
+"historyTimeToLive": null,
+"startableInTasklist": true
+},
+{
+"id": "Lafayette-process-v2:1:44cc1f18-d2a4-11ec-81ad-00e04cc10232",
+"key": "Lafayette-process-v2",
+"category": "http://bpmn.io/schema/bpmn",
+"description": null,
+"name": "Lafayette Version 2.",
+"version": 1,
+"resource": "E:\\Udemy_Clary\\BPMN_tool\\Lafayette\\target\\classes\\LafayetteV2.bpmn",
+"deploymentId": "44ad9a8f-d2a4-11ec-81ad-00e04cc10232",
+"diagram": null,
+"suspended": false,
+"tenantId": null,
+"versionTag": null,
+"historyTimeToLive": null,
+"startableInTasklist": true
+},
+{
+"id": "Lafayette-process-v3:1:44cba9e5-d2a4-11ec-81ad-00e04cc10232",
+"key": "Lafayette-process-v3",
+"category": "http://bpmn.io/schema/bpmn",
+"description": null,
+"name": "Lafayette Version 3.",
+"version": 1,
+"resource": "E:\\Udemy_Clary\\BPMN_tool\\Lafayette\\target\\classes\\LafayetteV3.bpmn",
+"deploymentId": "44ad9a8f-d2a4-11ec-81ad-00e04cc10232",
+"diagram": null,
+"suspended": false,
+"tenantId": null,
+"versionTag": null,
+"historyTimeToLive": null,
+"startableInTasklist": true
+},
+{
+"id": "Lafayette-process-v4:1:44cc1f19-d2a4-11ec-81ad-00e04cc10232",
+"key": "Lafayette-process-v4",
+"category": "http://bpmn.io/schema/bpmn",
+"description": null,
+"name": "Lafayette Version 4.",
+"version": 1,
+"resource": "E:\\Udemy_Clary\\BPMN_tool\\Lafayette\\target\\classes\\LafayetteV4.bpmn",
+"deploymentId": "44ad9a8f-d2a4-11ec-81ad-00e04cc10232",
+"diagram": null,
+"suspended": false,
+"tenantId": null,
+"versionTag": null,
+"historyTimeToLive": null,
+"startableInTasklist": true
+}
+]
+
+
+http://localhost:8080/engine-rest/process-definition/count
+
+{
+"count": 4
+}
+
+
+http://localhost:8080/engine-rest/process-definition/key/Lafayette-process-v1
+{
+"id": "Lafayette-process-v1:1:44cbf807-d2a4-11ec-81ad-00e04cc10232",
+"key": "Lafayette-process-v1",
+"category": "http://bpmn.io/schema/bpmn",
+"description": null,
+"name": "Lafayette Version 1.",
+"version": 1,
+"resource": "E:\\Udemy_Clary\\BPMN_tool\\Lafayette\\target\\classes\\LafayetteV1.bpmn",
+"deploymentId": "44ad9a8f-d2a4-11ec-81ad-00e04cc10232",
+"diagram": null,
+"suspended": false,
+"tenantId": null,
+"versionTag": null,
+"historyTimeToLive": null,
+"startableInTasklist": true
+}
+
+
+http://localhost:8080/engine-rest/process-definition?sortBy=version&sortOrder=desc
+
+[
+{
+"id": "Lafayette-process-v3:1:44cba9e5-d2a4-11ec-81ad-00e04cc10232",
+"key": "Lafayette-process-v3",
+"category": "http://bpmn.io/schema/bpmn",
+"description": null,
+"name": "Lafayette Version 3.",
+"version": 1,
+"resource": "E:\\Udemy_Clary\\BPMN_tool\\Lafayette\\target\\classes\\LafayetteV3.bpmn",
+"deploymentId": "44ad9a8f-d2a4-11ec-81ad-00e04cc10232",
+"diagram": null,
+"suspended": false,
+"tenantId": null,
+"versionTag": null,
+"historyTimeToLive": null,
+"startableInTasklist": true
+},
+{
+"id": "Lafayette-process-v4:1:44cc1f19-d2a4-11ec-81ad-00e04cc10232",
+"key": "Lafayette-process-v4",
+"category": "http://bpmn.io/schema/bpmn",
+"description": null,
+"name": "Lafayette Version 4.",
+"version": 1,
+"resource": "E:\\Udemy_Clary\\BPMN_tool\\Lafayette\\target\\classes\\LafayetteV4.bpmn",
+"deploymentId": "44ad9a8f-d2a4-11ec-81ad-00e04cc10232",
+"diagram": null,
+"suspended": false,
+"tenantId": null,
+"versionTag": null,
+"historyTimeToLive": null,
+"startableInTasklist": true
+},
+{
+"id": "Lafayette-process-v1:1:44cbf807-d2a4-11ec-81ad-00e04cc10232",
+"key": "Lafayette-process-v1",
+"category": "http://bpmn.io/schema/bpmn",
+"description": null,
+"name": "Lafayette Version 1.",
+"version": 1,
+"resource": "E:\\Udemy_Clary\\BPMN_tool\\Lafayette\\target\\classes\\LafayetteV1.bpmn",
+"deploymentId": "44ad9a8f-d2a4-11ec-81ad-00e04cc10232",
+"diagram": null,
+"suspended": false,
+"tenantId": null,
+"versionTag": null,
+"historyTimeToLive": null,
+"startableInTasklist": true
+},
+{
+"id": "Lafayette-process-v2:1:44cc1f18-d2a4-11ec-81ad-00e04cc10232",
+"key": "Lafayette-process-v2",
+"category": "http://bpmn.io/schema/bpmn",
+"description": null,
+"name": "Lafayette Version 2.",
+"version": 1,
+"resource": "E:\\Udemy_Clary\\BPMN_tool\\Lafayette\\target\\classes\\LafayetteV2.bpmn",
+"deploymentId": "44ad9a8f-d2a4-11ec-81ad-00e04cc10232",
+"diagram": null,
+"suspended": false,
+"tenantId": null,
+"versionTag": null,
+"historyTimeToLive": null,
+"startableInTasklist": true
+}
+]
+    ________________________________________________________
