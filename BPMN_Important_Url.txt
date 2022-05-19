@@ -1,5 +1,6 @@
 https://www.programmersought.net/article/365346536.html            *****************************************************
 https://docs.camunda.org/manual/7.16/reference/cmmn11/                Grouping/Tasks/Event-Triggered Elements/CaseFileItem..........
+https://github.com/camunda/camunda-bpm-platform/blob/master/engine-rest/engine-rest/src/main/java/org/camunda/bpm/engine/rest/UserRestService.java
 
 
 https://docs.camunda.org/manual/7.17/reference/bpmn20/
