@@ -1,5 +1,5 @@
 https://www.programmersought.net/article/365346536.html            *****************************************************
-
+https://docs.camunda.org/manual/7.16/reference/cmmn11/                Grouping/Tasks/Event-Triggered Elements/CaseFileItem..........
 
 
 https://docs.camunda.org/manual/7.17/reference/bpmn20/
