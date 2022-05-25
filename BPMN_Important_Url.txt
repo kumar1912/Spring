@@ -1,3 +1,20 @@
+[0:06 pm, 24/05/2022] Kumar D: https://fullstackdeveloper.guru/2021/09/10/how-to-write-a-generic-rest-client-in-spring-boot/
+[0:11 pm, 24/05/2022] Kumar D: https://ultimate.systems/web/blog/generic-controllers-and-services-in-spring-boot-java
+[0:20 pm, 24/05/2022] Kumar D: https://stackoverflow.com/questions/11016092/how-to-load-classes-at-runtime-from-a-folder-or-jar
+[5:13 pm, 24/05/2022] Kumar D: https://stackoverflow.com/questions/3403909/get-generic-type-of-class-at-runtime#:~:text=Java%20generics%20are%20mostly%20compile,information%20is%20lost%20at%20runtime.&text=To%20get%20the%20type%20information,an%20argument%20of%20the%20ctor.&text=%40PawelCioch%20java.,lang.
+[5:25 pm, 24/05/2022] Kumar D: https://stackoverflow.com/questions/3403909/get-generic-type-of-class-at-runtime#:~:text=Java%20generics%20are%20mostly%20compile,information%20is%20lost%20at%20runtime.&text=To%20get%20the%20type%20information,an%20argument%20of%20the%20ctor.&text=%40PawelCioch%20java.,lang.
+[5:25 pm, 24/05/2022] Kumar D: very important one👆
+[5:46 pm, 24/05/2022] Kumar D: https://www.javacodegeeks.com/2013/12/advanced-java-generics-retreiving-generic-type-arguments.html
+[5:48 pm, 24/05/2022] Kumar D: https://medium.com/egnyte-engineering/getting-runtime-type-information-from-a-generic-class-in-java-d05d6854ba5b
+[5:55 pm, 24/05/2022] Kumar D: https://www.javacodegeeks.com/2015/09/how-and-when-to-use-generics.html
+[5:59 pm, 24/05/2022] Kumar D: https://www.logicbig.com/tutorials/spring-framework/spring-core/generics-as-qualifiers.html
+[6:00 pm, 24/05/2022] Kumar D: important
+[6:04 pm, 24/05/2022] Kumar D: https://www.javadevjournal.com/spring-boot/spring-boot-add-filter/
+[7:52 am, 25/05/2022] Kumar D: https://www.infoq.com/news/2022/05/java-news-roundup-may16-2022/
+[7:53 am, 25/05/2022] Kumar D: https://toolsqa.com/maven/create-new-maven-project-eclipse/
+[7:58 am, 25/05/2022] Kumar D: https://vladmihalcea.com/java-data-access-technology/
+
+
 package com.example.filedemo;
 
 import java.io.BufferedReader;
