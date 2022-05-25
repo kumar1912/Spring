@@ -1,3 +1,13 @@
+file:
+  upload-dir: /Users/callicoder/uploads
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+
 https://www.programmersought.net/article/365346536.html            *****************************************************
 https://docs.camunda.org/manual/7.16/reference/cmmn11/                Grouping/Tasks/Event-Triggered Elements/CaseFileItem..........
 https://github.com/camunda/camunda-bpm-platform/blob/master/engine-rest/engine-rest/src/main/java/org/camunda/bpm/engine/rest/UserRestService.java
