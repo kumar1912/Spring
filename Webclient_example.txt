@@ -1,0 +1,328 @@
+package com.pluralsight.security.controller;
+
+import java.net.URI;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.pluralsight.security.model.AddTransactionToPortfolioDto;
+import com.pluralsight.security.model.DeleteTransactionsDto;
+
+import lombok.RequiredArgsConstructor;
+
+@Controller
+@RequiredArgsConstructor
+public class PortfolioCommandController {
+
+	private final WebClient webClient;
+	private static final String PORTFOLIO_SERVICE_DOMAIN = "http://localhost:8180";
+	
+	@PostMapping("/portfolio/transactions")
+	public ModelAndView addTransactionToPortfolio(@ModelAttribute("transaction") AddTransactionToPortfolioDto request, @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient client, @AuthenticationPrincipal OidcUser user) {
+		URI targetUri = UriComponentsBuilder.fromHttpUrl(PORTFOLIO_SERVICE_DOMAIN)
+		.path("/portfolio/transactions")
+		.build().encode().toUri();
+		request.setUsername(user.getPreferredUsername());
+		this.webClient.post()
+		.uri(targetUri)
+		 .attributes(ServletOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient(client))
+		.body(BodyInserters.fromObject(request))
+		.retrieve()
+		.bodyToMono(Void.class)
+		.block();
+		return new ModelAndView("redirect:/portfolio");
+	}
+		
+	@DeleteMapping("/portfolio/transactions")
+	public ModelAndView deleteTransactionFromPortfolio(@ModelAttribute("selected") DeleteTransactionsDto request,@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient client, @AuthenticationPrincipal OidcUser user) {
+		for(String transactionId : request.getId()) {
+			URI targetUri = UriComponentsBuilder.fromHttpUrl(PORTFOLIO_SERVICE_DOMAIN)
+				.path("/portfolio/transactions/"+transactionId)			
+				.build().encode().toUri();
+				this.webClient.delete()
+				.uri(targetUri)
+				.attributes(ServletOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient(client))
+				.retrieve()
+				.bodyToMono(Void.class)
+				.block();
+		}
+		return new ModelAndView("redirect:/portfolio");
+	}
+	
+}
+
+
+----------------------------------------------------------------------------------------------------logging.level.org.springframework=DEBUG
+server.servlet.context-path=/employee-management
+spring.codec.max-in-memory-size=1MB
+
+logging.level.reactor.netty.http.client.HttpClient=DEBUG
+
+---
+
+package com.howtodoinjava.reactive.demo.controller;
+
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.howtodoinjava.reactive.demo.model.Employee;
+import com.howtodoinjava.reactive.demo.service.EmployeeService;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+ 
+@RestController
+@RequestMapping("/employees")
+public class EmployeeController 
+{
+    @Autowired
+    private EmployeeService employeeService;
+    
+   
+    
+    @GetMapping(value = "/device")
+    public Flux<JSONObject> getDevice42() {
+        return employeeService.device42_assets();
+    }
+}
+
+
+--------------
+
+com.howtodoinjava.reactive.demo.config
+
+package com.howtodoinjava.reactive.demo.config;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.reactive.ClientHttpConnector;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.web.reactive.config.EnableWebFlux;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import io.netty.channel.ChannelOption;
+import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.handler.timeout.WriteTimeoutHandler;
+import reactor.netty.http.client.HttpClient;
+
+@Configuration
+@EnableWebFlux
+public class WebFluxConfig implements WebFluxConfigurer
+{  
+	Logger logger = LoggerFactory.getLogger(WebFluxConfig.class);
+	
+	@Bean
+	public WebClient getWebClient()
+	{
+		HttpClient httpClient = HttpClient.create()
+		        .tcpConfiguration(client ->
+		                client.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000)
+		                .doOnConnected(conn -> conn
+		                        .addHandlerLast(new ReadTimeoutHandler(10))
+		                        .addHandlerLast(new WriteTimeoutHandler(10))));
+		
+		ClientHttpConnector connector = new ReactorClientHttpConnector(httpClient.wiretap(true));	    
+
+		return WebClient.builder()
+		        .baseUrl("http://localhost:3000")
+		        .clientConnector(connector)
+		        .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+		        .build();
+	}
+	
+	/*
+	 * @Bean public WebClient getWebClient1() { HttpClient httpClient =
+	 * HttpClient.create() .tcpConfiguration(client ->
+	 * client.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000)
+	 * .doOnConnected(conn -> conn .addHandlerLast(new ReadTimeoutHandler(10))
+	 * .addHandlerLast(new WriteTimeoutHandler(10))));
+	 * 
+	 * ClientHttpConnector connector = new
+	 * ReactorClientHttpConnector(httpClient.wiretap(true));
+	 * 
+	 * return WebClient.builder() .baseUrl("https://swaggerdemo.device42.com")
+	 * //.defaultHeaders(headers -> headers.setBasicAuth("username", "password")) //
+	 * .header("Authorization", "Basic " + "YXBpX3VzZXI6YXAhX3VzZXJfcHIwZA==")
+	 * .clientConnector(connector) .defaultHeader(HttpHeaders.CONTENT_TYPE,
+	 * MediaType.APPLICATION_JSON_VALUE) .build(); }
+	 */
+}
+
+----------
+
+package com.howtodoinjava.reactive.demo.service;
+
+import java.time.Duration;
+
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import com.howtodoinjava.reactive.demo.model.Employee;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@Service
+public class EmployeeService implements IEmployeeService 
+{
+	@Autowired
+	WebClient webClient;
+	
+	
+	public Flux<Employee> findAll() 
+	{
+		return webClient.get()
+			.uri("/employees")
+			.retrieve()
+			.bodyToFlux(Employee.class)
+			.timeout(Duration.ofMillis(10_000));
+	}
+
+	public Mono<Employee> create(Employee empl)
+	{
+		return webClient.post()
+				.uri("/employees")
+				.body(Mono.just(empl), Employee.class)
+				.retrieve()
+				.bodyToMono(Employee.class)
+				.timeout(Duration.ofMillis(10_000));
+	}
+
+	public Mono<Employee> findById(Integer id) 
+	{
+		return webClient.get()
+				.uri("/employees/" + id)
+				.retrieve()
+				/*.onStatus(httpStatus -> HttpStatus.NOT_FOUND.equals(httpStatus),
+                        clientResponse -> Mono.empty())*/
+				.bodyToMono(Employee.class);
+	}
+
+	public Mono<Employee> update(Employee e) 
+	{
+		return webClient.put()
+				.uri("/employees/" + e.getId())
+				.body(Mono.just(e), Employee.class)
+				.retrieve()
+				.bodyToMono(Employee.class);
+	}
+
+	public Mono<Void> delete(Integer id) {
+		return webClient.delete()
+				.uri("/employees/" +id)
+				.retrieve()
+				.bodyToMono(Void.class);
+	}
+	
+	public Flux<JSONObject>  device42_assets() {
+		return webClient.get()
+				.uri("https://swaggerdemo.device42.com/api/1.0/devices/")
+				.header("Authorization", "Basic " + "YXBpX3VzZXI6YXAhX3VzZXJfcHIwZA==")
+				.retrieve()
+				.bodyToFlux(JSONObject.class)
+				.timeout(Duration.ofMillis(10_000));
+	}
+
+}
+
+package com.howtodoinjava.reactive.demo.service;
+
+import com.howtodoinjava.reactive.demo.model.Employee;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import org.json.simple.*;
+ 
+public interface IEmployeeService
+{
+	Flux<Employee> findAll();
+	
+	Mono<Employee> findById(Integer id);
+ 
+    Mono<Employee> create(Employee e);
+ 
+    Mono<Employee> update(Employee e);
+ 
+    Mono<Void> delete(Integer id);
+    
+    Flux<JSONObject> device42_assets();
+}
+
+--------------------
+
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.springexamples.demo</groupId>
+		<artifactId>SpringExamples</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>spring-reactive</artifactId>
+	<name>spring-reactive</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectreactor</groupId>
+			<artifactId>reactor-spring</artifactId>
+			<version>1.0.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+	</dependencies>
+</project>
+
+---------------------------------------
+
+Spring Reactive
+
+Tutorials related to this project:
+1.Spring WebClient Tutorial
+2.Spring WebClient – How to set timeouts
+
