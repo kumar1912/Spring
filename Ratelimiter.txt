@@ -1,0 +1,23 @@
+What are the different API rate limiting methods needed while designing large scale systems & why?
+https://www.youtube.com/watch?v=YSW3UE5AFD4
+
+Spring boot bucket4j | Ratelimiter Bucket4j | Create Rate Limit Pricing Plans | SpringBoot Bucket4j
+
+https://www.youtube.com/watch?v=HYg6l0pUQwM
+
+Implementing Rate Limiter for Spring Boot Applications
+	https://www.section.io/engineering-education/implement-rate-limiting-in-spring-boot/         
+
+	https://github.com/teevyne/bill-limiter/blob/main/src/main/java/com/example/bell/BellApplication.java     ********
+How to set rate limit for each user in Spring Boot?
+https://stackoverflow.com/questions/44042412/how-to-set-rate-limit-for-each-user-in-spring-boot
+				https://www.appsloveworld.com/springmvc/100/1/how-to-set-rate-limit-for-each-user-in-spring-boot
+
+https://spring.io/blog/2021/04/05/api-rate-limiting-with-spring-cloud-gateway
+
+
+https://stackoverflow.com/questions/49274326/ratelimiter-with-spring-mvc             **********
+		RateLimiter With Spring MVC
+		
+
+
