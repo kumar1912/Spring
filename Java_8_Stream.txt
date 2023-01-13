@@ -435,3 +435,43 @@ public class Utility
 			{return "%" + strValue.trim() + "%";}
 	}
 /** Common Method will be written here.
+
+
+
+-----------------------------------------------------
+
+
+package file;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
+public class ReadFileLineByLineUsingFiles {
+
+	public static void main(String[] args) {
+		try {
+			List<String> allLines = Files.readAllLines(Paths.get("H:\\TUI_Sonata\\My_Personal\\R_D_Task\\R_D_Java\\UdemyLines_ReadFileLineByLineUsingFiles.txt"));
+			for (String line : allLines) {
+
+				
+				  if (!line.equals("") && !line.contains("min")) { System.out.println(line); }
+				 
+
+				/*if (!line.equals("") && !line.contains("min") ) {	
+					char ch = line.charAt(0);
+					if(!Character.isDigit(ch)) {
+						System.out.println(line);
+					}
+				}*/
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+
+
+
